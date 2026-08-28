@@ -15,6 +15,8 @@ import {
   Trash2
 } from 'lucide-react';
 import { MediaCategory, MediaItem, MediaType } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 interface MediaGalleryProps {
   mediaList: MediaItem[];
@@ -27,6 +29,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
   onAddMedia,
   onDeleteMedia 
 }) => {
+  const { t, language } = useLanguage();
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'video' | 'photo' | MediaCategory>('all');
   const [activeMedia, setActiveMedia] = useState<MediaItem | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -92,13 +95,13 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
           <div className="space-y-3 text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase bg-[#4A5D4E]/10 text-[#4A5D4E]">
               <Sparkles className="w-3.5 h-3.5 text-[#4A5D4E]" />
-              Galeria & Registros
+              {t.gallery.badge}
             </div>
             <h2 className="font-serif font-normal text-3xl sm:text-4xl text-[#2C3639] tracking-tight">
-              Vídeos & fotos dos atendimentos
+              {t.gallery.title}
             </h2>
             <p className="text-stone-600 text-sm sm:text-base max-w-xl leading-relaxed font-light opacity-85">
-              Confira os atendimentos à beira-mar, macas confortáveis, óleos naturais e a vibe relaxante de Morro de São Paulo.
+              {t.gallery.subtitle}
             </p>
           </div>
 
@@ -109,19 +112,19 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
             className="inline-flex items-center gap-2 bg-[#4A5D4E] hover:bg-[#2C3639] text-white px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-wider shadow-xs transition-colors self-start md:self-auto"
           >
             <PlusCircle className="w-4 h-4 text-[#F5F2ED]" />
-            <span>Publicar Foto ou Vídeo</span>
+            <span>{t.gallery.btnAddMedia}</span>
           </button>
         </div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-2 overflow-x-auto">
           {[
-            { key: 'all', label: 'Todos', icon: Filter },
-            { key: 'video', label: 'Vídeos', icon: VideoIcon },
-            { key: 'photo', label: 'Fotos', icon: ImageIcon },
-            { key: 'beira_mar', label: 'À Beira-Mar', icon: Sparkles },
-            { key: 'terapeutica', label: 'Terapêutica', icon: Sparkles },
-            { key: 'ambiente', label: 'Pousadas & Ilha', icon: Sparkles },
+            { key: 'all', label: t.gallery.filterAll, icon: Filter },
+            { key: 'video', label: t.gallery.watchVideo, icon: VideoIcon },
+            { key: 'photo', label: t.gallery.viewPhoto, icon: ImageIcon },
+            { key: 'beira_mar', label: t.gallery.filterBeiraMar, icon: Sparkles },
+            { key: 'terapeutica', label: t.gallery.filterTherapeutic, icon: Sparkles },
+            { key: 'ambiente', label: t.gallery.filterAmbiance, icon: Sparkles },
           ].map(tab => {
             const Icon = tab.icon;
             return (
@@ -295,12 +298,12 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                 </div>
 
                 <a
-                  href={`https://wa.me/5571999545032?text=${encodeURIComponent(`Olá! Vi a foto/vídeo "${activeMedia.title}" e gostaria de agendar uma massagem igual!`)}`}
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Olá! Vi o item "${activeMedia.title}" na galeria e gostaria de agendar uma massagem.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3 rounded-full font-semibold text-xs uppercase tracking-wider text-center transition-colors shadow-[0_4px_12px_rgba(37,211,102,0.25)]"
                 >
-                  Quero Essa Massagem
+                  {t.services.btnBookWhatsapp}
                 </a>
               </div>
             </div>
@@ -322,7 +325,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
             <div className="flex items-center justify-between pb-4 border-b border-black/10">
               <div className="flex items-center gap-2">
                 <PlusCircle className="w-5 h-5 text-[#4A5D4E]" />
-                <h3 className="font-serif font-normal text-xl text-[#2C3639]">Publicar Foto ou Vídeo</h3>
+                <h3 className="font-serif font-normal text-xl text-[#2C3639]">{t.gallery.modalAddTitle}</h3>
               </div>
               <button 
                 onClick={() => setIsAddModalOpen(false)}
@@ -335,7 +338,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
             <form onSubmit={handleAddSubmit} className="space-y-4 pt-4 text-xs sm:text-sm">
               {/* Type toggle */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1.5">Tipo de Mídia</label>
+                <label className="block font-semibold text-stone-700 mb-1.5">{t.gallery.formType}</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
@@ -346,7 +349,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                         : 'bg-white text-stone-700 border-black/10'
                     }`}
                   >
-                    <ImageIcon className="w-4 h-4" /> Foto
+                    <ImageIcon className="w-4 h-4" /> {t.gallery.viewPhoto}
                   </button>
                   <button
                     type="button"
@@ -357,18 +360,18 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                         : 'bg-white text-stone-700 border-black/10'
                     }`}
                   >
-                    <VideoIcon className="w-4 h-4" /> Vídeo
+                    <VideoIcon className="w-4 h-4" /> {t.gallery.watchVideo}
                   </button>
                 </div>
               </div>
 
               {/* Title */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1">Título da Foto/Vídeo *</label>
+                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formTitle} *</label>
                 <input
                   type="text"
                   required
-                  placeholder="Ex: Massagem na Terceira Praia..."
+                  placeholder="Ex: Massagem na Segunda Praia..."
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
@@ -377,11 +380,11 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
               {/* File upload or URL */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1">Carregar Arquivo ou Inserir Link *</label>
+                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formUrl} *</label>
                 <div className="space-y-2">
                   <label className="flex flex-col items-center justify-center border-2 border-dashed border-stone-300 hover:border-[#4A5D4E] rounded-xl p-4 cursor-pointer bg-white transition-colors">
                     <Upload className="w-6 h-6 text-stone-400 mb-1" />
-                    <span className="text-xs text-stone-600 font-medium">Clique para escolher foto/vídeo do dispositivo</span>
+                    <span className="text-xs text-stone-600 font-medium">{t.gallery.formUrl} (Upload)</span>
                     <input
                       type="file"
                       accept="image/*,video/*"
@@ -393,7 +396,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                   <div className="relative">
                     <input
                       type="url"
-                      placeholder="Ou cole a URL da imagem/vídeo..."
+                      placeholder="https://..."
                       value={newUrl}
                       onChange={(e) => setNewUrl(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white text-xs"
@@ -404,23 +407,23 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
               {/* Category */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1">Categoria</label>
+                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formCategory}</label>
                 <select
                   value={newCategory}
                   onChange={(e) => setNewCategory(e.target.value as MediaCategory)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
                 >
-                  <option value="beira_mar">À Beira-Mar (Praia)</option>
-                  <option value="terapeutica">Terapêutica / Dores</option>
-                  <option value="relaxante">Relaxante & Aromaterapia</option>
-                  <option value="ambiente">Ambiente / Pousada / Quiosque</option>
-                  <option value="drenagem">Drenagem & Pés</option>
+                  <option value="beira_mar">{t.gallery.filterBeiraMar}</option>
+                  <option value="terapeutica">{t.gallery.filterTherapeutic}</option>
+                  <option value="relaxante">{t.gallery.filterRelax}</option>
+                  <option value="ambiente">{t.gallery.filterAmbiance}</option>
+                  <option value="drenagem">{t.gallery.filterDrainage}</option>
                 </select>
               </div>
 
               {/* Location in Morro */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1">Localização em Morro de SP</label>
+                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formLocation}</label>
                 <input
                   type="text"
                   value={newLocation}
@@ -432,10 +435,10 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
               {/* Description */}
               <div>
-                <label className="block font-semibold text-stone-700 mb-1">Descrição</label>
+                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formDesc}</label>
                 <textarea
                   rows={2}
-                  placeholder="Breve descrição da sessão, técnica ou benefícios..."
+                  placeholder="..."
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
@@ -448,14 +451,14 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                   onClick={() => setIsAddModalOpen(false)}
                   className="px-4 py-2.5 rounded-full text-stone-600 hover:bg-stone-200 text-xs font-semibold"
                 >
-                  Cancelar
+                  {t.gallery.btnCancel}
                 </button>
                 <button
                   type="submit"
                   disabled={!newTitle || !newUrl}
                   className="bg-[#4A5D4E] hover:bg-[#2C3639] disabled:opacity-50 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-xs transition-colors"
                 >
-                  Adicionar à Galeria
+                  {t.gallery.btnSave}
                 </button>
               </div>
             </form>

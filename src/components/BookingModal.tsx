@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { BookingFormData, ServiceItem } from '../types';
 import { getCustomBookingUrl } from '../utils/whatsapp';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   services,
   preSelectedService,
 }) => {
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState<BookingFormData>({
     fullName: '',
     serviceId: services[0]?.id || '',
@@ -48,7 +50,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const url = getCustomBookingUrl(formData, services);
+    const url = getCustomBookingUrl(formData, services, language);
     window.open(url, '_blank');
     onClose();
   };
@@ -71,8 +73,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif font-normal text-xl text-[#2C3639]">Agendamento Rápido</h3>
-              <p className="text-[11px] text-stone-500 font-light">Direto no WhatsApp de Nilson Massoterapeuta</p>
+              <h3 className="font-serif font-normal text-xl text-[#2C3639]">{t.bookingModal.title}</h3>
+              <p className="text-[11px] text-stone-500 font-light">{t.bookingModal.subtitle}</p>
             </div>
           </div>
           <button 
@@ -88,11 +90,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           
           {/* Full Name */}
           <div>
-            <label className="block font-semibold text-stone-700 mb-1">Seu Nome *</label>
+            <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelName} *</label>
             <input
               type="text"
               required
-              placeholder="Como podemos te chamar?"
+              placeholder={t.bookingModal.placeholderName}
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
@@ -101,7 +103,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           {/* Service Selection */}
           <div>
-            <label className="block font-semibold text-stone-700 mb-1">Escolha a Massagem Desejada *</label>
+            <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelService} *</label>
             <select
               value={formData.serviceId}
               onChange={(e) => setFormData({ ...formData, serviceId: e.target.value })}
@@ -117,7 +119,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           {/* Location Type */}
           <div>
-            <label className="block font-semibold text-stone-700 mb-1.5">Onde prefere ser atendido?</label>
+            <label className="block font-semibold text-stone-700 mb-1.5">{t.bookingModal.labelLocation}</label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
@@ -130,8 +132,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               >
                 <Palmtree className="w-5 h-5 text-[#4A5D4E] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-xs">Na Praia</p>
-                  <p className="text-[11px] text-stone-500 font-light">Ao som do mar e brisa</p>
+                  <p className="font-semibold text-xs">{t.bookingModal.locBeach}</p>
+                  <p className="text-[11px] text-stone-500 font-light">{t.bookingModal.locBeachSub}</p>
                 </div>
               </button>
 
@@ -146,8 +148,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               >
                 <Home className="w-5 h-5 text-[#4A5D4E] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-xs">Na Pousada/Hotel</p>
-                  <p className="text-[11px] text-stone-500 font-light">Levamos a maca até você</p>
+                  <p className="font-semibold text-xs">{t.bookingModal.locPousada}</p>
+                  <p className="text-[11px] text-stone-500 font-light">{t.bookingModal.locPousadaSub}</p>
                 </div>
               </button>
             </div>
@@ -156,10 +158,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           {/* If pousada selected */}
           {formData.locationType === 'pousada' && (
             <div className="animate-in fade-in duration-200">
-              <label className="block font-semibold text-stone-700 mb-1">Nome da Pousada / Local</label>
+              <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelPousadaName}</label>
               <input
                 type="text"
-                placeholder="Ex: Pousada Villa dos Corais, Pousada Passárgada..."
+                placeholder={t.bookingModal.placeholderPousada}
                 value={formData.pousadaName}
                 onChange={(e) => setFormData({ ...formData, pousadaName: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
@@ -170,7 +172,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           {/* Date, Time & Number of persons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block font-semibold text-stone-700 mb-1">Data Preferida</label>
+              <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelDate}</label>
               <input
                 type="date"
                 value={formData.preferredDate}
@@ -180,7 +182,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-semibold text-stone-700 mb-1">Horário Sugerido</label>
+              <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelTime}</label>
               <input
                 type="time"
                 value={formData.preferredTime}
@@ -190,25 +192,25 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-semibold text-stone-700 mb-1">Nº de Pessoas</label>
+              <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelPersons}</label>
               <select
                 value={formData.numberOfPersons}
                 onChange={(e) => setFormData({ ...formData, numberOfPersons: Number(e.target.value) })}
                 className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
               >
-                <option value={1}>1 Pessoa</option>
-                <option value={2}>2 Pessoas (Casal/Amigos)</option>
-                <option value={3}>3+ Pessoas (Grupo)</option>
+                <option value={1}>{t.bookingModal.person1}</option>
+                <option value={2}>{t.bookingModal.person2}</option>
+                <option value={3}>{t.bookingModal.person3Plus}</option>
               </select>
             </div>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block font-semibold text-stone-700 mb-1">Observações ou Região de Dor</label>
+            <label className="block font-semibold text-stone-700 mb-1">{t.bookingModal.labelNotes}</label>
             <input
               type="text"
-              placeholder="Ex: Muita dor na lombar, preferência por óleo suave..."
+              placeholder={t.bookingModal.placeholderNotes}
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
@@ -218,7 +220,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           {/* Submit CTA */}
           <div className="pt-3 border-t border-black/10 flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-[11px] text-stone-500 text-center sm:text-left font-light">
-              💬 Abrirá sua conversa no WhatsApp com a mensagem pré-formatada.
+              {t.bookingModal.whatsappHint}
             </p>
             <button
               id="btn-submit-booking-whatsapp"
@@ -227,7 +229,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               className="w-full sm:w-auto bg-[#4A5D4E] hover:bg-[#2C3639] disabled:opacity-50 text-white font-semibold uppercase tracking-wider text-xs px-6 py-3 rounded-full flex items-center justify-center gap-2 shadow-2xs transition-all"
             >
               <MessageCircle className="w-4 h-4 fill-white" />
-              <span>Enviar pelo WhatsApp</span>
+              <span>{t.bookingModal.btnSendWhatsapp}</span>
             </button>
           </div>
 
@@ -237,3 +239,4 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     </div>
   );
 };
+

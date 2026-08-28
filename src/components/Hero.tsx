@@ -1,12 +1,15 @@
 import React from 'react';
-import { MessageCircle, Star, Sparkles, MapPin, Waves, Calendar, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
+import { MessageCircle, Star, Sparkles, Waves, Calendar, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
 import { getQuickBookingUrl, GOOGLE_MAPS_URL } from '../utils/whatsapp';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
   onOpenBooking: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
+  const { t, language } = useLanguage();
+
   return (
     <section id="inicio" className="relative overflow-hidden bg-[#F5F2ED] pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-black/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
@@ -19,28 +22,28 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             <div className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase bg-[#4A5D4E]/10 text-[#4A5D4E] border border-[#4A5D4E]/20">
                 <Waves className="w-3.5 h-3.5 text-[#4A5D4E]" />
-                Morro de São Paulo, Bahia
+                {t.hero.locationTag}
               </span>
               <a
                 href={GOOGLE_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/80 hover:bg-white text-stone-700 border border-black/5 transition-colors shadow-2xs"
-                title="Ver perfil 5.0 no Google Maps"
+                title="Google Maps"
               >
                 <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                 <span className="font-bold text-stone-900">5.0</span>
-                <span className="text-stone-500 text-[11px]">no Google Maps</span>
+                <span className="text-stone-500 text-[11px]">{t.hero.ratingText}</span>
               </a>
             </div>
 
             {/* Main Headline - Clean Minimalism Serif */}
             <div className="space-y-4">
               <h1 className="font-serif font-normal text-3xl sm:text-5xl lg:text-6xl text-[#2C3639] leading-[1.12] tracking-[-0.02em]">
-                Equilíbrio e calma em meio <span className="italic font-normal text-[#4A5D4E]">ao paraíso.</span>
+                {t.hero.titlePart1}<span className="italic font-normal text-[#4A5D4E]">{t.hero.titlePart2}</span>
               </h1>
               <p className="text-base sm:text-lg text-stone-700 leading-relaxed max-w-xl font-normal opacity-85">
-                Sinta a energia da natureza local combinada com técnicas de massagem exclusivas para renovar seu corpo e alma. Atendimento especializado em um cenário paradisíaco.
+                {t.hero.description}
               </p>
             </div>
 
@@ -48,13 +51,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
               <a
                 id="btn-hero-whatsapp"
-                href={getQuickBookingUrl('Olá! Estou em Morro de São Paulo e gostaria de agendar uma massagem. Qual a disponibilidade?')}
+                href={getQuickBookingUrl(undefined, language)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white px-8 py-4 rounded-full font-semibold text-sm shadow-[0_10px_20px_rgba(37,211,102,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 <MessageCircle className="w-4 h-4 fill-white" />
-                <span>Agendar via WhatsApp</span>
+                <span>{t.hero.btnWhatsapp}</span>
               </a>
 
               <button
@@ -63,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 className="inline-flex items-center justify-center gap-2 bg-[#4A5D4E] hover:bg-[#2C3639] text-white px-7 py-4 rounded-full font-medium text-xs uppercase tracking-wider transition-all duration-200 shadow-xs"
               >
                 <Calendar className="w-4 h-4 text-[#F5F2ED]" />
-                <span>Personalizar Atendimento</span>
+                <span>{t.hero.btnCustomize}</span>
               </button>
             </div>
 
@@ -72,24 +75,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-white/60 border border-black/5">
                 <Waves className="w-4 h-4 text-[#4A5D4E] shrink-0" />
                 <div className="text-left">
-                  <p className="font-semibold text-xs text-[#2C3639]">Ao Som do Mar</p>
-                  <p className="text-stone-500 text-[11px]">Brisa & natureza</p>
+                  <p className="font-semibold text-xs text-[#2C3639]">{t.hero.pillSoundSea}</p>
+                  <p className="text-stone-500 text-[11px]">{t.hero.pillSoundSeaSub}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-white/60 border border-black/5">
                 <Sparkles className="w-4 h-4 text-[#4A5D4E] shrink-0" />
                 <div className="text-left">
-                  <p className="font-semibold text-xs text-[#2C3639]">Óleos Naturais</p>
-                  <p className="text-stone-500 text-[11px]">Aromaterapia pura</p>
+                  <p className="font-semibold text-xs text-[#2C3639]">{t.hero.pillNaturalOils}</p>
+                  <p className="text-stone-500 text-[11px]">{t.hero.pillNaturalOilsSub}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-white/60 border border-black/5">
                 <ShieldCheck className="w-4 h-4 text-[#4A5D4E] shrink-0" />
                 <div className="text-left">
-                  <p className="font-semibold text-xs text-[#2C3639]">Praia ou Pousada</p>
-                  <p className="text-stone-500 text-[11px]">Conforto & higiene</p>
+                  <p className="font-semibold text-xs text-[#2C3639]">{t.hero.pillBeachPousada}</p>
+                  <p className="text-stone-500 text-[11px]">{t.hero.pillBeachPousadaSub}</p>
                 </div>
               </div>
             </div>
@@ -97,7 +100,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             {/* Trust note */}
             <div className="flex items-center gap-2 text-xs text-stone-500 font-medium pt-1">
               <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-              <span>Mais de 1.000 clientes satisfeitos em Morro de São Paulo</span>
+              <span>{t.hero.satisfiedClients}</span>
             </div>
 
           </div>
@@ -118,13 +121,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 {/* Floating Status Pill */}
                 <div className="absolute top-4 left-4 bg-[#2C3639]/80 backdrop-blur-md text-white text-[11px] font-medium tracking-wide uppercase px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-white/10">
                   <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                  <span>Atendimento Ativo na Ilha</span>
+                  <span>{t.hero.therapistActive}</span>
                 </div>
 
                 {/* Bottom Overlay Card Details */}
                 <div className="absolute bottom-4 left-4 right-4 text-white text-left p-4 rounded-xl bg-[#2C3639]/85 backdrop-blur-md border border-white/10">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <p className="font-serif text-lg font-normal text-[#F5F2ED]">Nilson Massoterapeuta</p>
+                    <p className="font-serif text-lg font-normal text-[#F5F2ED]">{t.hero.therapistTitle}</p>
                     <div className="flex text-amber-400">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-3 h-3 fill-amber-400" />
@@ -132,12 +135,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                     </div>
                   </div>
                   <p className="text-xs text-[#F5F2ED]/80 font-light">
-                    Especialista em alívio de tensões, massagem relaxante e descompressão muscular com óleos vegetais.
+                    {t.hero.therapistBio}
                   </p>
                   <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-[#78A1BB] font-medium">
-                    <span>📍 Morro de São Paulo, Bahia</span>
+                    <span>📍 {t.hero.locationTag}</span>
                     <a href="#galeria" className="underline hover:text-white flex items-center gap-1">
-                      <span>Ver Galeria</span>
+                      <span>{t.hero.seeGallery}</span>
                       <ArrowRight className="w-3 h-3" />
                     </a>
                   </div>
@@ -147,8 +150,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               {/* Minimalist Floating review quote */}
               <div className="hidden sm:flex absolute -bottom-5 -left-5 bg-[#F5F2ED] p-3.5 rounded-xl shadow-md border border-black/10 items-center gap-3 max-w-xs animate-in fade-in slide-in-from-bottom duration-500 text-left">
                 <div className="border-l-2 border-[#4A5D4E] pl-2.5">
-                  <p className="font-serif italic text-xs text-[#2C3639]">"A melhor massagem que já recebi ao som das ondas."</p>
-                  <p className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold mt-0.5">— Marina Silva, SP</p>
+                  <p className="font-serif italic text-xs text-[#2C3639]">{t.hero.quoteText}</p>
+                  <p className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold mt-0.5">{t.hero.quoteAuthor}</p>
                 </div>
               </div>
 
@@ -160,4 +163,5 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     </section>
   );
 };
+
 

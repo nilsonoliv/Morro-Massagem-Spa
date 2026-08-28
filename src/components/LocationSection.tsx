@@ -11,8 +11,22 @@ import {
   Home
 } from 'lucide-react';
 import { GOOGLE_MAPS_URL, createWhatsAppLink } from '../utils/whatsapp';
+import { useLanguage } from '../context/LanguageContext';
 
 export const LocationSection: React.FC = () => {
+  const { t, language } = useLanguage();
+
+  const getLocalizedWhatsAppMsg = () => {
+    switch (language) {
+      case 'en': return 'Hello! I would like to receive the exact massage location in Morro de São Paulo.';
+      case 'es': return '¡Hola! Me gustaría recibir la ubicación exacta para el masaje en Morro de São Paulo.';
+      case 'it': return 'Ciao! Vorrei ricevere la posizione esatta del massaggio a Morro de São Paulo.';
+      case 'fr': return 'Bonjour ! J’aimerais recevoir l’emplacement exact du massage à Morro de São Paulo.';
+      case 'he': return 'שלום! אשמח לקבל את המיקום המדויק של הטיפול במורו דה סאו פאולו.';
+      default: return 'Olá! Gostaria de receber a localização exata do atendimento em Morro de São Paulo.';
+    }
+  };
+
   return (
     <section id="localizacao" className="py-16 sm:py-24 bg-[#FAF8F5] border-t border-black/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -21,13 +35,13 @@ export const LocationSection: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase bg-[#4A5D4E]/10 text-[#4A5D4E]">
             <MapPin className="w-3.5 h-3.5 text-[#4A5D4E]" />
-            Localização & Logística
+            {t.location.badge}
           </div>
           <h2 className="font-serif font-normal text-3xl sm:text-4xl text-[#2C3639] tracking-tight">
-            Onde estamos em Morro de São Paulo
+            {t.location.title}
           </h2>
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed font-light opacity-85">
-            Atendimento presencial nas praias paradisíacas ou com total comodidade diretamente na sua pousada ou hotel.
+            {t.location.subtitle}
           </p>
         </div>
 
@@ -67,8 +81,8 @@ export const LocationSection: React.FC = () => {
             {/* Map Action Bar */}
             <div className="p-4 sm:p-5 bg-[#F5F2ED] border-t border-black/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
               <div>
-                <p className="font-semibold text-xs sm:text-sm text-[#2C3639]">Perfil Oficial no Google Maps</p>
-                <p className="text-[11px] text-stone-500 font-light">Consulte rotas, fotos e avaliações no app</p>
+                <p className="font-semibold text-xs sm:text-sm text-[#2C3639]">{t.location.profileMapsTitle}</p>
+                <p className="text-[11px] text-stone-500 font-light">{t.location.profileMapsSubtitle}</p>
               </div>
 
               <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -79,18 +93,18 @@ export const LocationSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-[#4A5D4E] hover:bg-[#2C3639] text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors shadow-2xs"
                 >
-                  <span>Abrir Perfil</span>
+                  <span>{t.location.btnOpenMaps}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
                 <a
-                  href={createWhatsAppLink('Olá! Gostaria de receber a localização exata do atendimento em Morro de São Paulo.')}
+                  href={createWhatsAppLink(getLocalizedWhatsAppMsg())}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20ba59] text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors shadow-2xs"
                 >
                   <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                  <span>Pedir Posição</span>
+                  <span>{t.location.btnRequestLocation}</span>
                 </a>
               </div>
             </div>
@@ -108,13 +122,13 @@ export const LocationSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-serif font-normal text-base text-[#2C3639]">
-                    Atendimento à Beira-Mar (Praia)
+                    {t.location.cardBeachTitle}
                   </h3>
-                  <p className="text-[11px] text-stone-500 font-medium">Segunda & Terceira Praia</p>
+                  <p className="text-[11px] text-stone-500 font-medium">{t.location.cardBeachSubtitle}</p>
                 </div>
               </div>
               <p className="text-xs text-stone-600 leading-relaxed font-light">
-                Maca montada sob quiosque ou sombreador, com a brisa suave do oceano e o som relaxante das ondas do mar de Morro de São Paulo.
+                {t.location.cardBeachDesc}
               </p>
             </div>
 
@@ -126,13 +140,13 @@ export const LocationSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-serif font-normal text-base text-[#2C3639]">
-                    Atendimento em Pousadas & Hotéis
+                    {t.location.cardPousadaTitle}
                   </h3>
-                  <p className="text-[11px] text-stone-500 font-medium">Vila, 1ª, 2ª, 3ª, 4ª Praia e Gamboa</p>
+                  <p className="text-[11px] text-stone-500 font-medium">{t.location.cardPousadaSubtitle}</p>
                 </div>
               </div>
               <p className="text-xs text-stone-600 leading-relaxed font-light">
-                Levamos a estrutura completa até o seu quarto ou varanda: maca profissional higienizada, lençóis descartáveis e óleos essenciais.
+                {t.location.cardPousadaDesc}
               </p>
             </div>
 
@@ -140,20 +154,20 @@ export const LocationSection: React.FC = () => {
             <div className="bg-[#2C3639] text-[#F5F2ED] rounded-2xl p-5 sm:p-6 shadow-xs space-y-3 border border-white/5">
               <div className="flex items-center gap-2 text-[#78A1BB] text-xs font-semibold uppercase tracking-wider">
                 <Clock className="w-4 h-4" />
-                <span>Horários de Atendimento</span>
+                <span>{t.location.hoursTitle}</span>
               </div>
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between py-1 border-b border-white/10">
-                  <span className="text-stone-300 font-light">Segunda a Domingo:</span>
-                  <span className="font-semibold text-white">08:00 às 19:00</span>
+                  <span className="text-stone-300 font-light">{t.location.hoursWeek}:</span>
+                  <span className="font-semibold text-white">08:00 - 19:00</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-stone-300 font-light">Agendamentos Noturnos:</span>
-                  <span className="font-semibold text-[#78A1BB]">Sob consulta prévia</span>
+                  <span className="text-stone-300 font-light">{t.location.hoursNight}:</span>
+                  <span className="font-semibold text-[#78A1BB]">{t.location.hoursNightValue}</span>
                 </div>
               </div>
               <p className="text-[11px] text-stone-400 font-light">
-                *Recomendamos agendar com antecedência, especialmente na alta temporada e fins de semana.
+                {t.location.hoursNote}
               </p>
             </div>
 
@@ -165,4 +179,5 @@ export const LocationSection: React.FC = () => {
     </section>
   );
 };
+
 

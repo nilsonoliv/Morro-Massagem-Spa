@@ -1,57 +1,66 @@
 import { BookingFormData, ServiceItem } from '../types';
+import { Language, TRANSLATIONS } from '../i18n/translations';
 
 export const WHATSAPP_NUMBER = '5571999545032';
-export const DISPLAY_PHONE = '(71) 99954-5032';
+export const DISPLAY_PHONE = '+55 71 99954-5032';
 export const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/5gj4D6ytApPfgW8G8';
-export const THERAPIST_NAME = 'Massoterapia Morro de São Paulo';
+export const THERAPIST_NAME = 'Nilson Massoterapia Morro de São Paulo';
 
 export function createWhatsAppLink(message: string): string {
   const encoded = encodeURIComponent(message);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
 }
 
-export function getQuickBookingUrl(preset?: string): string {
+export function getQuickBookingUrl(preset?: string, lang: Language = 'pt'): string {
   if (preset) {
     return createWhatsAppLink(preset);
   }
-  const defaultMsg = `Olá! Estou em Morro de São Paulo e gostaria de informações para agendar uma massagem.`;
-  return createWhatsAppLink(defaultMsg);
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.pt;
+  return createWhatsAppLink(t.whatsapp.greeting);
 }
 
-export function getServiceBookingUrl(service: ServiceItem, date?: string, time?: string): string {
-  let msg = `Olá! Gostaria de agendar a *${service.name}* (${service.durationMin} min) em Morro de São Paulo.`;
+export function getServiceBookingUrl(service: ServiceItem, lang: Language = 'pt', date?: string, time?: string): string {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.pt;
+  const translatedService = t.services.items.find(s => s.id === service.id);
+  const sName = translatedService ? translatedService.name : service.name;
+
+  let msg = `🌿 *${t.hero.therapistTitle} - Morro de São Paulo*\n`;
+  msg += `💆 *${t.whatsapp.serviceRequest}:* ${sName} (${service.durationMin} min)\n`;
   if (date || time) {
-    msg += `\n📅 Preferência: ${date ? date : 'a combinar'}${time ? ` às ${time}` : ''}`;
+    msg += `📅 *${t.whatsapp.datePref}:* ${date || 'OK'} ${time ? `⏰ ${time}` : ''}\n`;
   }
-  msg += `\nQual é a disponibilidade de horário?`;
+  msg += `\n${t.whatsapp.greeting}`;
   return createWhatsAppLink(msg);
 }
 
-export function getCustomBookingUrl(data: BookingFormData, services: ServiceItem[]): string {
+export function getCustomBookingUrl(data: BookingFormData, services: ServiceItem[], lang: Language = 'pt'): string {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.pt;
   const selectedService = services.find(s => s.id === data.serviceId);
-  const serviceName = selectedService ? selectedService.name : 'Massagem';
+  const translatedService = t.services.items.find(s => s.id === data.serviceId);
+  const serviceName = translatedService ? translatedService.name : (selectedService ? selectedService.name : 'Massagem');
   
   const locationText = data.locationType === 'praia' 
-    ? 'Na Beira da Praia (com brisa e som do mar)'
+    ? t.bookingModal.locBeach
     : data.locationType === 'pousada'
-    ? `Na Pousada/Hotel: ${data.pousadaName || 'A combinar'}`
-    : 'No Espaço de Atendimento';
+    ? `${t.bookingModal.locPousada}: ${data.pousadaName || ''}`
+    : 'Espaço';
 
-  let msg = `🌿 *Novo Agendamento - Massoterapia Morro de SP*\n\n`;
-  msg += `👤 *Nome:* ${data.fullName}\n`;
-  msg += `💆‍♂️ *Serviço:* ${serviceName}\n`;
-  msg += `👥 *Pessoas:* ${data.numberOfPersons}\n`;
-  msg += `📍 *Local:* ${locationText}\n`;
+  let msg = `🌿 *${t.hero.therapistTitle} - Agendamento / Booking*\n\n`;
+  msg += `👤 *Nome / Name:* ${data.fullName}\n`;
+  msg += `💆 *${t.whatsapp.serviceRequest}:* ${serviceName}\n`;
+  msg += `👥 *${t.whatsapp.personsCount}:* ${data.numberOfPersons}\n`;
+  msg += `📍 *${t.whatsapp.placePref}:* ${locationText}\n`;
   if (data.preferredDate) {
-    msg += `📅 *Data:* ${data.preferredDate}\n`;
+    msg += `📅 *${t.whatsapp.datePref}:* ${data.preferredDate}\n`;
   }
   if (data.preferredTime) {
-    msg += `⏰ *Horário:* ${data.preferredTime}\n`;
+    msg += `⏰ *${t.whatsapp.timePref}:* ${data.preferredTime}\n`;
   }
   if (data.notes) {
-    msg += `📝 *Observação / Foco:* ${data.notes}\n`;
+    msg += `📝 *${t.whatsapp.notesText}:* ${data.notes}\n`;
   }
-  msg += `\nOlá! Poderia confirmar a disponibilidade para esse horário?`;
+  msg += `\n${t.whatsapp.greeting}`;
 
   return createWhatsAppLink(msg);
 }
+

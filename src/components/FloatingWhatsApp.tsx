@@ -1,20 +1,77 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Sparkles, Send, Waves, Phone } from 'lucide-react';
 import { DISPLAY_PHONE, createWhatsAppLink, getQuickBookingUrl } from '../utils/whatsapp';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FloatingWhatsAppProps {
   onOpenBooking: () => void;
 }
 
 export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBooking }) => {
+  const { t, language } = useLanguage();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const presets = [
-    'Olá Nilson! Gostaria de saber a disponibilidade de horários para hoje em Morro de SP.',
-    'Olá! Quanto custa a Massagem Relaxante e Terapêutica?',
-    'Olá! Vocês atendem direto na minha pousada em Morro de São Paulo?',
-    'Olá! Gostaria de agendar massagem para casal.',
-  ];
+  const getPresets = () => {
+    switch (language) {
+      case 'en':
+        return [
+          'Hello Nilson! I would like to check available massage times for today in Morro de SP.',
+          'Hello! How much is the Relaxing & Therapeutic massage?',
+          'Hello! Do you provide massage sessions directly at my hotel/pousada in Morro de São Paulo?',
+          'Hello! I would like to book a couples massage.',
+        ];
+      case 'es':
+        return [
+          '¡Hola Nilson! Me gustaría consultar disponibilidad de horarios para hoy en Morro de SP.',
+          '¡Hola! ¿Cuánto cuesta el Masaje Relajante y Terapéutico?',
+          '¡Hola! ¿Realizan masajes directamente en mi posada/hotel en Morro de São Paulo?',
+          '¡Hola! Me gustaría agendar un masaje para parejas.',
+        ];
+      case 'it':
+        return [
+          'Ciao Nilson! Vorrei conoscere la disponibilità di orari per oggi a Morro de SP.',
+          'Ciao! Quanto costa il massaggio rilassante e terapeutico?',
+          'Ciao! Eseguite massaggi direttamente nella mia posada a Morro de São Paulo?',
+          'Ciao! Vorrei prenotare un massaggio per coppia.',
+        ];
+      case 'fr':
+        return [
+          'Bonjour Nilson ! J’aimerais connaître les disponibilités pour aujourd’hui à Morro de SP.',
+          'Bonjour ! Quel est le tarif pour le massage relaxant et thérapeutique ?',
+          'Bonjour ! Faites-vous des séances directement à ma posada/hôtel à Morro de São Paulo ?',
+          'Bonjour ! J’aimerais réserver un massage pour couple.',
+        ];
+      case 'he':
+        return [
+          'שלום נילסון! אשמח לדעת על זמינות תורים להיום במורו דה סאו פאולו.',
+          'שלום! מה המחיר לעיסוי מרגיע או טיפולי?',
+          'שלום! האם אתם מגיעים לטיפול בפוסאדה/מלון שלי במורו?',
+          'שלום! אשמח לקבוע עיסוי זוגי.',
+        ];
+      default:
+        return [
+          'Olá Nilson! Gostaria de saber a disponibilidade de horários para hoje em Morro de SP.',
+          'Olá! Quanto custa a Massagem Relaxante e Terapêutica?',
+          'Olá! Vocês atendem direto na minha pousada em Morro de São Paulo?',
+          'Olá! Gostaria de agendar massagem para casal.',
+        ];
+    }
+  };
+
+  const presets = getPresets();
+
+  const getFloatingWelcome = () => {
+    switch (language) {
+      case 'en': return { title: 'Hello! Welcome to paradise 🌴', sub: 'How can I help you relax today? Pick a quick message or click to open WhatsApp:' };
+      case 'es': return { title: '¡Hola! Bienvenido(a) al paraíso 🌴', sub: '¿Cómo puedo ayudarte a relajarte hoy? Elige un mensaje rápido o haz clic para abrir WhatsApp:' };
+      case 'it': return { title: 'Ciao! Benvenuto(a) in paradiso 🌴', sub: 'Come posso aiutarti a rilassarti oggi? Scegli un messaggio rapido o clicca per aprire WhatsApp:' };
+      case 'fr': return { title: 'Bonjour ! Bienvenue au paradis 🌴', sub: 'Comment puis-je vous aider à vous détendre aujourd’hui ? Choisissez un message rapide ou cliquez pour ouvrir WhatsApp :' };
+      case 'he': return { title: 'שלום! ברוכים הבאים לגן עדן 🌴', sub: 'איך אוכל לעזור לך להירגע היום? בחר הודעה מהירה או לחץ לפתיחת וואטסאפ:' };
+      default: return { title: 'Olá! Seja muito bem-vindo(a) ao paraíso 🌴', sub: 'Como posso te ajudar a relaxar hoje? Escolha uma mensagem rápida ou clique para abrir o WhatsApp:' };
+    }
+  };
+
+  const welcome = getFloatingWelcome();
 
   return (
     <>
@@ -37,7 +94,12 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
                   <h4 className="font-serif font-normal text-sm text-white">Nilson Massoterapia</h4>
                   <p className="text-[10px] text-[#78A1BB] flex items-center gap-1 font-light">
                     <span className="w-1.5 h-1.5 bg-[#78A1BB] rounded-full animate-pulse" />
-                    Online em Morro de São Paulo
+                    {language === 'en' ? 'Online in Morro de São Paulo' :
+                     language === 'es' ? 'En línea en Morro de São Paulo' :
+                     language === 'it' ? 'Online a Morro de São Paulo' :
+                     language === 'fr' ? 'En ligne à Morro de São Paulo' :
+                     language === 'he' ? 'זמין אונליין במורו דה סאו פאולו' :
+                     'Online em Morro de São Paulo'}
                   </p>
                 </div>
               </div>
@@ -53,9 +115,9 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
             {/* Bubble Message */}
             <div className="p-4 bg-[#FAF8F5] text-xs space-y-3">
               <div className="bg-white p-3.5 rounded-xl shadow-2xs border border-black/5 text-stone-700 space-y-1">
-                <p className="font-medium text-[#2C3639]">Olá! Seja muito bem-vindo(a) ao paraíso 🌴</p>
+                <p className="font-medium text-[#2C3639]">{welcome.title}</p>
                 <p className="text-stone-600 font-light leading-relaxed">
-                  Como posso te ajudar a relaxar hoje? Escolha uma mensagem rápida ou clique para abrir o WhatsApp:
+                  {welcome.sub}
                 </p>
               </div>
 
@@ -84,16 +146,16 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
                 }}
                 className="text-xs font-semibold text-[#4A5D4E] hover:underline uppercase tracking-wider"
               >
-                Formulário
+                {t.floatingChat.btnFullForm}
               </button>
               <a
-                href={getQuickBookingUrl()}
+                href={getQuickBookingUrl(language)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#4A5D4E] hover:bg-[#2C3639] text-white px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs transition-colors"
               >
                 <Send className="w-3 h-3" />
-                <span>Abrir Chat</span>
+                <span>WhatsApp</span>
               </a>
             </div>
 
@@ -109,7 +171,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
               className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md text-[#2C3639] text-xs font-semibold px-4 py-2 rounded-full shadow-lg border border-black/5 hover:bg-white transition-all hover:scale-105"
             >
               <span className="w-2 h-2 rounded-full bg-[#25D366] animate-ping" />
-              <span>Agendamento Rápido</span>
+              <span>{t.floatingChat.badgeQuickBook}</span>
             </button>
           )}
 
@@ -117,7 +179,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
             id="btn-floating-whatsapp"
             onClick={() => setIsPopupOpen(!isPopupOpen)}
             className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
-            aria-label="Abrir WhatsApp para agendamento"
+            aria-label="WhatsApp"
           >
             <MessageCircle className="w-7 h-7 fill-white" />
           </button>
@@ -137,20 +199,21 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
             onClick={onOpenBooking}
             className="bg-white hover:bg-stone-100 text-[#2C3639] text-xs font-semibold px-3.5 py-2 rounded-full border border-black/5 transition-colors"
           >
-            Opções
+            {t.nav.services}
           </button>
           <a
             id="btn-mobile-sticky-whatsapp"
-            href={getQuickBookingUrl('Olá! Estou em Morro de São Paulo e gostaria de agendar uma massagem.')}
+            href={getQuickBookingUrl(language)}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#4A5D4E] hover:bg-[#2C3639] text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1.5 shadow-xs active:scale-95 transition-transform"
           >
             <MessageCircle className="w-3.5 h-3.5 fill-white" />
-            <span>Agendar</span>
+            <span>WhatsApp</span>
           </a>
         </div>
       </div>
     </>
   );
 };
+

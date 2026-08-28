@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { getServiceBookingUrl } from '../utils/whatsapp';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ServicesSectionProps {
   services: ServiceItem[];
@@ -21,10 +22,7 @@ interface ServicesSectionProps {
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSelectService }) => {
   const [filter, setFilter] = useState<'all' | 'relaxante' | 'terapeutica' | 'estetica' | 'especial'>('all');
-
-  const filteredServices = filter === 'all' 
-    ? services 
-    : services.filter(s => s.category === filter);
+  const { t, language } = useLanguage();
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -38,6 +36,24 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
     }
   };
 
+  // Merge the base services with translated content
+  const localizedServices = services.map(baseService => {
+    const translated = t.services.items.find(item => item.id === baseService.id);
+    if (!translated) return baseService;
+    return {
+      ...baseService,
+      name: translated.name,
+      description: translated.description,
+      benefits: translated.benefits,
+      recommendedFor: translated.recommendedFor,
+      badge: translated.badge || baseService.badge,
+    };
+  });
+
+  const filteredServices = filter === 'all' 
+    ? localizedServices 
+    : localizedServices.filter(s => s.category === filter);
+
   return (
     <section id="servicos" className="py-16 sm:py-24 bg-[#F5F2ED]">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -46,24 +62,24 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase bg-[#4A5D4E]/10 text-[#4A5D4E]">
             <Sparkles className="w-3.5 h-3.5 text-[#4A5D4E]" />
-            Técnicas & Terapias
+            {t.services.badge}
           </div>
           <h2 className="font-serif font-normal text-3xl sm:text-4xl text-[#2C3639] tracking-tight">
-            Massagens feitas para renovar o corpo e a alma
+            {t.services.title}
           </h2>
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed font-normal opacity-85">
-            Óleos vegetais puros, toalhas esterilizadas e toques manuais profundos que harmonizam relaxamento e alívio de tensões musculares.
+            {t.services.subtitle}
           </p>
         </div>
 
         {/* Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {[
-            { key: 'all', label: 'Todas as Opções' },
-            { key: 'relaxante', label: 'Relaxante & Pés' },
-            { key: 'terapeutica', label: 'Terapêutica & Ventosa' },
-            { key: 'estetica', label: 'Drenagem Linfática' },
-            { key: 'especial', label: 'Atendimento na Pousada' },
+            { key: 'all', label: t.services.filterAll },
+            { key: 'relaxante', label: t.services.filterRelax },
+            { key: 'terapeutica', label: t.services.filterTherapy },
+            { key: 'estetica', label: t.services.filterDrainage },
+            { key: 'especial', label: t.services.filterPousada },
           ].map(tab => (
             <button
               key={tab.key}
@@ -124,7 +140,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
 
                 {/* Benefits checklist */}
                 <div className="space-y-1.5 pt-2 border-t border-black/5">
-                  <p className="text-[10px] uppercase tracking-wider font-bold text-stone-400">Benefícios:</p>
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-stone-400">{t.services.benefitsLabel}:</p>
                   {service.benefits.map((benefit, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs text-stone-700">
                       <Check className="w-3.5 h-3.5 text-[#4A5D4E] shrink-0" />
@@ -135,7 +151,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
 
                 {/* Recommended for note */}
                 <div className="bg-[#F5F2ED]/70 rounded-xl p-2.5 text-xs text-stone-600 border border-black/5">
-                  <span className="font-semibold text-[#2C3639]">Indicado para: </span>
+                  <span className="font-semibold text-[#2C3639]">{t.services.recommendedForLabel}: </span>
                   {service.recommendedFor}
                 </div>
               </div>
@@ -144,13 +160,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
               <div className="pt-6 mt-4 border-t border-black/5 flex flex-col sm:flex-row gap-2">
                 <a
                   id={`btn-service-whatsapp-${service.id}`}
-                  href={getServiceBookingUrl(service)}
+                  href={getServiceBookingUrl(service, language)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-2.5 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-[0_4px_10px_rgba(37,211,102,0.2)]"
                 >
                   <MessageCircle className="w-4 h-4 fill-white" />
-                  <span>Agendar no Zap</span>
+                  <span>{t.services.btnBookWhatsapp}</span>
                 </a>
 
                 <button
@@ -158,7 +174,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
                   onClick={() => onSelectService(service)}
                   className="inline-flex items-center justify-center gap-1.5 bg-[#F5F2ED] hover:bg-stone-200 text-stone-700 px-3.5 py-2.5 rounded-full font-medium text-xs transition-colors border border-black/5"
                 >
-                  <span>Detalhes</span>
+                  <span>{t.services.btnDetails}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -171,20 +187,20 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
         <div className="mt-12 bg-[#2C3639] rounded-2xl p-6 sm:p-8 text-[#F5F2ED] flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm border border-white/5 text-left">
           <div className="space-y-1.5 text-center md:text-left">
             <h4 className="font-serif font-normal text-xl sm:text-2xl text-white">
-              Dúvidas sobre qual massagem escolher?
+              {t.services.adviceTitle}
             </h4>
             <p className="text-stone-300 text-xs sm:text-sm max-w-xl font-light">
-              Fale conosco pelo WhatsApp. Adaptamos a intensidade, o uso de óleos aromáticos e o local especialmente para a sua necessidade.
+              {t.services.adviceSubtitle}
             </p>
           </div>
           <a
-            href={getServiceBookingUrl(services[0])}
+            href={getServiceBookingUrl(services[0], language)}
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold px-6 py-3.5 rounded-full text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_10px_20px_rgba(37,211,102,0.2)] transition-all active:scale-95"
           >
             <MessageCircle className="w-4 h-4 fill-white" />
-            Falar no WhatsApp
+            {t.services.adviceBtn}
           </a>
         </div>
 
@@ -192,4 +208,5 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
     </section>
   );
 };
+
 
