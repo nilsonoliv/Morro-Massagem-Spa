@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --nature-green: #4A5D4E;
+    --sand-beige: #F5F2ED;
+    --deep-forest: #2C3639;
+    --soft-teal: #78A1BB;
+    --text-main: #1A1A1A;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--sand-beige);
+    color: var(--text-main);
+  }
+  
+  h1, h2, h3, .font-serif-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom scrollbar matching Clean Minimalism palette */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ECE8E1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4A5D4E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2C3639;
+}
+
+

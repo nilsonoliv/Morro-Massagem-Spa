@@ -1,0 +1,6 @@
+{
+  "name": "Massoterapia Morro de São Paulo",
+  "description": "Portfólio de massoterapia à beira-mar em Morro de São Paulo com galeria de fotos e vídeos, depoimentos de clientes, agendamento via WhatsApp e localização.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
