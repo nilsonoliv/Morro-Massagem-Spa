@@ -53,7 +53,7 @@ export const LocationSection: React.FC = () => {
             {/* Embedded Responsive Map */}
             <div className="relative w-full h-80 sm:h-96 bg-stone-200">
               <iframe
-                title="Mapa de Morro de São Paulo - Nilson Massoterapia"
+                title="Mapa de Morro de São Paulo - Shakti Prana Massage"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15535.79774698506!2d-38.92209795!3d-13.38139585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x73e1c66f7f32997%3A0x6b149b1a03fc514f!2sMorro%20de%20S%C3%A3o%20Paulo%2C%20Cairu%20-%20BA!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
                 width="100%"
                 height="100%"
@@ -159,7 +159,7 @@ export const LocationSection: React.FC = () => {
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between py-1 border-b border-white/10">
                   <span className="text-stone-300 font-light">{t.location.hoursWeek}:</span>
-                  <span className="font-semibold text-white">08:00 - 19:00</span>
+                  <span className="font-semibold text-white">08:00 - 22:00</span>
                 </div>
                 <div className="flex justify-between py-1">
                   <span className="text-stone-300 font-light">{t.location.hoursNight}:</span>

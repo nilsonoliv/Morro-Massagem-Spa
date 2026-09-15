@@ -35,7 +35,7 @@ export interface ServiceItem {
   name: string;
   tagline: string;
   description: string;
-  durationMin: number;
+  durationMin: number | string;
   priceEstimate?: string;
   benefits: string[];
   recommendedFor: string;

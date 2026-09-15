@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { DISPLAY_PHONE, GOOGLE_MAPS_URL, getQuickBookingUrl } from '../utils/whatsapp';
 import { useLanguage } from '../context/LanguageContext';
+import { ShaktiLogo } from './ShaktiLogo';
 
 export const Footer: React.FC = () => {
   const { t, language } = useLanguage();
@@ -25,12 +26,10 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#4A5D4E] text-[#F5F2ED] flex items-center justify-center font-serif text-lg font-normal border border-white/10">
-                N
-              </div>
+              <ShaktiLogo size="sm" showAura />
               <div>
-                <h3 className="font-serif text-lg font-normal text-white">Nilson Massoterapia</h3>
-                <p className="text-[10px] uppercase tracking-[1.5px] text-[#78A1BB] font-medium">Morro de São Paulo, Bahia</p>
+                <h3 className="font-serif text-lg font-normal text-white">Shakti Prana Massage</h3>
+                <p className="text-[10px] uppercase tracking-[1.5px] text-[#78A1BB] font-medium">Spa & Morro Massagem • Morro de SP</p>
               </div>
             </div>
             <p className="text-xs text-stone-300 leading-relaxed font-light">
@@ -108,9 +107,27 @@ export const Footer: React.FC = () => {
 
         </div>
 
+        {/* SEO Keywords & Search Indexing Bar */}
+        <div className="mt-10 pt-6 border-t border-white/10 text-left">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] text-stone-400 font-light">
+            <span className="font-medium text-[#D9A84E] uppercase tracking-wider text-[10px]">Buscas frequentes:</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">morro massagem</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">spa</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">massagem orgástica</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">thai massagem</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">morro de são paulo</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">passeios morro</span>
+          </div>
+        </div>
+
         {/* Bottom copyright */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400 font-light">
-          <p>© {new Date().getFullYear()} Nilson Massoterapia • {t.footer.copyright}</p>
+        <div className="mt-6 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400 font-light">
+          <p>© {new Date().getFullYear()} Shakti Prana Massage • {t.footer.copyright}</p>
           <p className="flex items-center gap-1">
             {t.footer.madeWithLove}
           </p>

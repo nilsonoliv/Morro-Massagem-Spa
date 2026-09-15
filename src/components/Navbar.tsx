@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, MessageCircle, Sparkles, MapPin, Phone } from 'lucide-react';
 import { SoundAmbiance } from './SoundAmbiance';
 import { LanguageSelector } from './LanguageSelector';
+import { ShaktiLogo } from './ShaktiLogo';
 import { useLanguage } from '../context/LanguageContext';
 import { DISPLAY_PHONE, getQuickBookingUrl } from '../utils/whatsapp';
 
@@ -24,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           </div>
           <div className="hidden md:flex items-center gap-5 text-[#F5F2ED]/80 text-[11px]">
             <span className="flex items-center gap-1.5 opacity-90">
-              <Sparkles className="w-3 h-3 text-[#78A1BB]" /> {t.nav.servicesBadge}
+              <Sparkles className="w-3 h-3 text-[#D9A84E]" /> {t.nav.servicesBadge}
             </span>
             <span className="opacity-40">•</span>
             <a 
@@ -40,17 +41,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-3 sm:px-8">
         <div className="flex items-center justify-between h-20 gap-2 sm:gap-4">
-          {/* Brand Logo - Clean Minimalism Serif Italic */}
-          <a href="#" className="flex items-center gap-3 group text-left shrink-0">
-            <div className="w-9 h-9 rounded-full bg-[#4A5D4E] text-[#F5F2ED] flex items-center justify-center font-serif text-base font-medium group-hover:bg-[#2C3639] transition-colors shadow-xs">
-              N
-            </div>
+          {/* Brand Logo - Official Shakti Prana Emblem */}
+          <a href="#" className="flex items-center gap-2.5 sm:gap-3.5 group text-left shrink-0">
+            <ShaktiLogo size="sm" showAura className="transition-transform group-hover:scale-105" />
             <div>
-              <span className="block font-serif italic text-lg sm:text-2xl font-normal tracking-[-0.5px] text-[#2C3639]">
-                Massoterapia Morro
+              <span className="block font-serif text-lg sm:text-2xl font-normal tracking-[-0.5px] text-[#2C3639] group-hover:text-[#4A5D4E] transition-colors">
+                Shakti Prana
               </span>
-              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[2px] font-semibold text-stone-500 opacity-70">
-                {t.nav.brandSubtitle}
+              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[2px] font-semibold text-[#4A5D4E]">
+                Massage & Spa • Morro de SP
               </span>
             </div>
           </a>

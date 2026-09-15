@@ -4,7 +4,7 @@ import { Language, TRANSLATIONS } from '../i18n/translations';
 export const WHATSAPP_NUMBER = '5571999545032';
 export const DISPLAY_PHONE = '+55 71 99954-5032';
 export const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/5gj4D6ytApPfgW8G8';
-export const THERAPIST_NAME = 'Nilson Massoterapia Morro de São Paulo';
+export const THERAPIST_NAME = 'Shakti Prana Massage • Morro de São Paulo';
 
 export function createWhatsAppLink(message: string): string {
   const encoded = encodeURIComponent(message);

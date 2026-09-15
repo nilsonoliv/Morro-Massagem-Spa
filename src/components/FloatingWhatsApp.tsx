@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageCircle, X, Sparkles, Send, Waves, Phone } from 'lucide-react';
 import { DISPLAY_PHONE, createWhatsAppLink, getQuickBookingUrl } from '../utils/whatsapp';
 import { useLanguage } from '../context/LanguageContext';
+import { ShaktiLogo } from './ShaktiLogo';
 
 interface FloatingWhatsAppProps {
   onOpenBooking: () => void;
@@ -15,45 +16,45 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
     switch (language) {
       case 'en':
         return [
-          'Hello Nilson! I would like to check available massage times for today in Morro de SP.',
-          'Hello! How much is the Relaxing & Therapeutic massage?',
+          'Hello Shakti Prana! I would like to check available massage times for today in Morro de SP.',
+          'Hello! How much is the Relaxing & Thai Yoga massage?',
           'Hello! Do you provide massage sessions directly at my hotel/pousada in Morro de São Paulo?',
           'Hello! I would like to book a couples massage.',
         ];
       case 'es':
         return [
-          '¡Hola Nilson! Me gustaría consultar disponibilidad de horarios para hoy en Morro de SP.',
-          '¡Hola! ¿Cuánto cuesta el Masaje Relajante y Terapéutico?',
+          '¡Hola Shakti Prana! Me gustaría consultar disponibilidad de horarios para hoy en Morro de SP.',
+          '¡Hola! ¿Cuánto cuesta el Masaje Relajante y Thai Yoga?',
           '¡Hola! ¿Realizan masajes directamente en mi posada/hotel en Morro de São Paulo?',
           '¡Hola! Me gustaría agendar un masaje para parejas.',
         ];
       case 'it':
         return [
-          'Ciao Nilson! Vorrei conoscere la disponibilità di orari per oggi a Morro de SP.',
-          'Ciao! Quanto costa il massaggio rilassante e terapeutico?',
+          'Ciao Shakti Prana! Vorrei conoscere la disponibilità di orari per oggi a Morro de SP.',
+          'Ciao! Quanto costa il massaggio rilassante e Thai Yoga?',
           'Ciao! Eseguite massaggi direttamente nella mia posada a Morro de São Paulo?',
           'Ciao! Vorrei prenotare un massaggio per coppia.',
         ];
       case 'fr':
         return [
-          'Bonjour Nilson ! J’aimerais connaître les disponibilités pour aujourd’hui à Morro de SP.',
-          'Bonjour ! Quel est le tarif pour le massage relaxant et thérapeutique ?',
+          'Bonjour Shakti Prana ! J’aimerais connaître les disponibilités pour aujourd’hui à Morro de SP.',
+          'Bonjour ! Quel est le tarif pour le massage relaxant et Thaï Yoga ?',
           'Bonjour ! Faites-vous des séances directement à ma posada/hôtel à Morro de São Paulo ?',
           'Bonjour ! J’aimerais réserver un massage pour couple.',
         ];
       case 'he':
         return [
-          'שלום נילסון! אשמח לדעת על זמינות תורים להיום במורו דה סאו פאולו.',
-          'שלום! מה המחיר לעיסוי מרגיע או טיפולי?',
+          'שלום שאקטי פראנה! אשמח לדעת על זמינות תורים להיום במורו דה סאו פאולו.',
+          'שלום! מה המחיר לעיסוי מרגיע או תאילנדי (Thai Yoga)?',
           'שלום! האם אתם מגיעים לטיפול בפוסאדה/מלון שלי במורו?',
           'שלום! אשמח לקבוע עיסוי זוגי.',
         ];
       default:
         return [
-          'Olá Nilson! Gostaria de saber a disponibilidade de horários para hoje em Morro de SP.',
-          'Olá! Quanto custa a Massagem Relaxante e Terapêutica?',
+          'Olá Shakti Prana! Gostaria de saber a disponibilidade de horários para hoje em Morro de SP.',
+          'Olá! Quanto custa a Massagem Relaxante e Thai Yoga Massagem?',
           'Olá! Vocês atendem direto na minha pousada em Morro de São Paulo?',
-          'Olá! Gostaria de agendar massagem para casal.',
+          'Olá! Gostaria de agendar massagem para casal após os passeios.',
         ];
     }
   };
@@ -85,13 +86,11 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
             <div className="bg-[#2C3639] p-4 text-[#F5F2ED] flex items-center justify-between border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-[#4A5D4E] text-[#F5F2ED] font-normal flex items-center justify-center font-serif text-base border border-white/10">
-                    N
-                  </div>
+                  <ShaktiLogo size="xs" showAura />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] rounded-full border-2 border-[#2C3639]" />
                 </div>
                 <div>
-                  <h4 className="font-serif font-normal text-sm text-white">Nilson Massoterapia</h4>
+                  <h4 className="font-serif font-normal text-sm text-white">Shakti Prana Massage</h4>
                   <p className="text-[10px] text-[#78A1BB] flex items-center gap-1 font-light">
                     <span className="w-1.5 h-1.5 bg-[#78A1BB] rounded-full animate-pulse" />
                     {language === 'en' ? 'Online in Morro de São Paulo' :
@@ -190,7 +189,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ onOpenBookin
       {/* Mobile Bottom Sticky Conversion Bar */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-black/10 p-2.5 px-4 flex items-center justify-between gap-3 shadow-lg">
         <div className="text-left">
-          <p className="font-serif text-xs text-[#2C3639]">Nilson Massoterapia</p>
+          <p className="font-serif text-xs text-[#2C3639]">Shakti Prana Massage</p>
           <p className="text-[10px] text-[#4A5D4E] font-medium">Morro de São Paulo • BA</p>
         </div>
 

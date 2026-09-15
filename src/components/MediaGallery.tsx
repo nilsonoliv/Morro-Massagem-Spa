@@ -11,8 +11,7 @@ import {
   Sparkles, 
   Upload, 
   Eye, 
-  Filter,
-  Trash2
+  Filter
 } from 'lucide-react';
 import { MediaCategory, MediaItem, MediaType } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -21,13 +20,11 @@ import { WHATSAPP_NUMBER } from '../utils/whatsapp';
 interface MediaGalleryProps {
   mediaList: MediaItem[];
   onAddMedia: (newMedia: Omit<MediaItem, 'id' | 'dateAdded'>) => void;
-  onDeleteMedia?: (id: string) => void;
 }
 
 export const MediaGallery: React.FC<MediaGalleryProps> = ({ 
   mediaList, 
-  onAddMedia,
-  onDeleteMedia 
+  onAddMedia
 }) => {
   const { t, language } = useLanguage();
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'video' | 'photo' | MediaCategory>('all');
@@ -208,24 +205,10 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
               {/* Media Info Content */}
               <div className="p-4 sm:p-5 text-left space-y-1.5">
-                <div className="flex items-center justify-between gap-2">
+                <div>
                   <h3 className="font-serif font-normal text-base sm:text-lg text-[#2C3639] leading-tight line-clamp-1">
                     {item.title}
                   </h3>
-                  {onDeleteMedia && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (confirm('Deseja excluir esta mídia?')) {
-                          onDeleteMedia(item.id);
-                        }
-                      }}
-                      className="text-stone-400 hover:text-rose-600 p-1 transition-colors"
-                      title="Excluir mídia"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
                 </div>
                 <p className="text-xs text-stone-600 line-clamp-2 leading-relaxed font-light">
                   {item.description}

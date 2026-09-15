@@ -1,6 +1,6 @@
 {
-  "name": "Massoterapia Morro de São Paulo",
-  "description": "Portfólio de massoterapia à beira-mar em Morro de São Paulo com galeria de fotos e vídeos, depoimentos de clientes, agendamento via WhatsApp e localização.",
+  "name": "Shakti Prana Massage",
+  "description": "Shakti Prana Massage em Morro de São Paulo: Spa e morro massagem à beira-mar e em pousadas. Thai massagem, massagem orgástica, relaxamento após passeios em Morro e terapias integrativas.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

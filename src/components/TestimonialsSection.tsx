@@ -34,7 +34,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   const [authorName, setAuthorName] = useState('');
   const [city, setCity] = useState('');
   const [rating, setRating] = useState(5);
-  const [service, setService] = useState('Massagem Relaxante Tropical');
+  const [service, setService] = useState('Massagem Relaxante Sensorial');
   const [comment, setComment] = useState('');
 
   const averageRating = (

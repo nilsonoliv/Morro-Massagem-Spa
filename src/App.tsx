@@ -68,10 +68,6 @@ export default function App() {
     setMediaList(prev => [newItem, ...prev]);
   };
 
-  const handleDeleteMedia = (id: string) => {
-    setMediaList(prev => prev.filter(m => m.id !== id));
-  };
-
   const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date' | 'helpfulCount'>) => {
     const newRev: Review = {
       ...newReviewData,
@@ -118,7 +114,6 @@ export default function App() {
         <MediaGallery 
           mediaList={mediaList} 
           onAddMedia={handleAddMedia}
-          onDeleteMedia={handleDeleteMedia}
         />
 
         {/* Testimonials & Reviews */}
