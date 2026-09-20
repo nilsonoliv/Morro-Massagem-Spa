@@ -17,11 +17,21 @@ const STORAGE_KEY = 'massoterapia_selected_language';
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     try {
+      // 1. Check URL query param ?lang= for search engine indexing & direct links
+      if (typeof window !== 'undefined' && window.location.search) {
+        const params = new URLSearchParams(window.location.search);
+        const urlLang = params.get('lang')?.toLowerCase();
+        if (urlLang && ['pt', 'es', 'en', 'it', 'fr', 'he'].includes(urlLang)) {
+          return urlLang as Language;
+        }
+      }
+
+      // 2. Check saved preference
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved && ['pt', 'es', 'en', 'it', 'fr', 'he'].includes(saved)) {
         return saved as Language;
       }
-      // Check browser navigator language
+      // 3. Check browser navigator language
       const browserLang = navigator.language.slice(0, 2).toLowerCase();
       if (browserLang === 'es') return 'es';
       if (browserLang === 'en') return 'en';

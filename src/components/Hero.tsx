@@ -2,6 +2,7 @@ import React from 'react';
 import { MessageCircle, Star, Sparkles, Waves, Calendar, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
 import { getQuickBookingUrl, GOOGLE_MAPS_URL } from '../utils/whatsapp';
 import { useLanguage } from '../context/LanguageContext';
+import { SoundAmbiance } from './SoundAmbiance';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -19,11 +20,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           <div className="lg:col-span-7 text-left space-y-7">
             
             {/* Top Pill & Location Badge */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase bg-[#4A5D4E]/10 text-[#4A5D4E] border border-[#4A5D4E]/20">
                 <Waves className="w-3.5 h-3.5 text-[#4A5D4E]" />
                 {t.hero.locationTag}
               </span>
+
+              {/* Botão Som do Mar reduzido no modo mobile (libera espaço no header para o menu) */}
+              <div className="sm:hidden inline-flex">
+                <SoundAmbiance id="btn-sound-ambiance-hero" size="sm" />
+              </div>
+
               <a
                 href={GOOGLE_MAPS_URL}
                 target="_blank"

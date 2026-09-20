@@ -1,0 +1,15 @@
+# Robots.txt for Shakti Prana Massage - Morro de São Paulo
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Modern Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+Allow: /images/
+
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Sitemap location
+Sitemap: https://shaktipranamassage.com.br/sitemap.xml

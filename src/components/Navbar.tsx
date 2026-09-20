@@ -60,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
             <a href="#servicos" className="hover:text-[#4A5D4E] transition-colors">{t.nav.services}</a>
             <a href="#galeria" className="hover:text-[#4A5D4E] transition-colors">{t.nav.gallery}</a>
             <a href="#depoimentos" className="hover:text-[#4A5D4E] transition-colors">{t.nav.reviews}</a>
+            <a href="#faq" className="hover:text-[#4A5D4E] transition-colors">FAQ</a>
             <a href="#localizacao" className="hover:text-[#4A5D4E] transition-colors">{t.nav.location}</a>
           </nav>
 
@@ -70,8 +71,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               <LanguageSelector variant="compact" />
             </div>
 
-            {/* Sound Synthesizer */}
-            <SoundAmbiance />
+            {/* Sound Synthesizer (Desktop/Tablet - hidden on mobile to give room for mobile menu dropdown) */}
+            <div className="hidden sm:inline-flex">
+              <SoundAmbiance id="btn-sound-ambiance" />
+            </div>
 
             {/* Quick WhatsApp Pill Button */}
             <a
@@ -135,6 +138,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               className="px-3 py-2 rounded-xl hover:bg-black/5 hover:text-[#4A5D4E]"
             >
               {t.nav.reviews}
+            </a>
+            <a
+              href="#faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-xl hover:bg-black/5 hover:text-[#4A5D4E]"
+            >
+              FAQ / Dúvidas
             </a>
             <a
               href="#localizacao"

@@ -49,6 +49,7 @@ export const Footer: React.FC = () => {
               <li><a href="#servicos" className="hover:text-white transition-colors">{t.nav.services}</a></li>
               <li><a href="#galeria" className="hover:text-white transition-colors">{t.nav.gallery}</a></li>
               <li><a href="#depoimentos" className="hover:text-white transition-colors">{t.nav.reviews}</a></li>
+              <li><a href="#faq" className="hover:text-white transition-colors">FAQ • Perguntas Frequentes</a></li>
               <li><a href="#localizacao" className="hover:text-white transition-colors">{t.nav.location}</a></li>
             </ul>
           </div>
@@ -113,13 +114,17 @@ export const Footer: React.FC = () => {
             <span className="font-medium text-[#D9A84E] uppercase tracking-wider text-[10px]">Buscas frequentes:</span>
             <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">morro massagem</span>
             <span className="text-white/20">•</span>
-            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">spa</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">spa morro de são paulo</span>
             <span className="text-white/20">•</span>
             <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">massagem orgástica</span>
             <span className="text-white/20">•</span>
             <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">thai massagem</span>
             <span className="text-white/20">•</span>
-            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">morro de são paulo</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">massoterapia morro de são paulo</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">massagem em pousada morro</span>
+            <span className="text-white/20">•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">massagem relaxante segunda praia</span>
             <span className="text-white/20">•</span>
             <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-stone-300">passeios morro</span>
           </div>

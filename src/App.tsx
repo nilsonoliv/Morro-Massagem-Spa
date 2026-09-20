@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { ServicesSection } from './components/ServicesSection';
 import { MediaGallery } from './components/MediaGallery';
 import { TestimonialsSection } from './components/TestimonialsSection';
+import { FAQSection } from './components/FAQSection';
 import { LocationSection } from './components/LocationSection';
 import { BookingModal } from './components/BookingModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
@@ -129,6 +130,9 @@ export default function App() {
           onAddReview={handleAddReview}
           onLikeReview={handleLikeReview}
         />
+
+        {/* Semantic SEO Frequently Asked Questions */}
+        <FAQSection />
 
         {/* Location & Google Maps */}
         <LocationSection />
