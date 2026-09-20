@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Soft luxury gradient background -->
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#FCFAF6" stop-opacity="0.95" />
+      <stop offset="85%" stop-color="#F5EFE6" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#EFE6D8" stop-opacity="0.95" />
+    </radialGradient>
+
+    <!-- Golden Ring Gradient -->
+    <linearGradient id="gold-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D9A84E" />
+      <stop offset="50%" stop-color="#F3CA7E" />
+      <stop offset="100%" stop-color="#C28E35" />
+    </linearGradient>
+
+    <!-- Sun & Moon Gold -->
+    <linearGradient id="sun-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2C265" />
+      <stop offset="100%" stop-color="#D89A32" />
+    </linearGradient>
+
+    <!-- Lotus Teal -->
+    <linearGradient id="teal-petal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4CB8C4" />
+      <stop offset="100%" stop-color="#286877" />
+    </linearGradient>
+
+    <!-- Curve for bottom text -->
+    <path id="bottom-curve" d="M 85 320 A 185 185 0 0 0 415 320" fill="none" />
+  </defs>
+
+  <!-- Circular Outer Badge Base -->
+  <circle cx="250" cy="250" r="240" fill="url(#bg-glow)" />
+  
+  <!-- Outer Gold Ring -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="url(#gold-stroke)" stroke-width="4.5" stroke-linecap="round" />
+  <circle cx="250" cy="250" r="231" fill="none" stroke="#D9A84E" stroke-opacity="0.3" stroke-width="1" />
+
+  <!-- TOP TITLE: Shakti in flowing script -->
+  <text x="250" y="112" 
+        text-anchor="middle" 
+        font-family="'Playfair Display', 'Brush Script MT', 'Dancing Script', Georgia, cursive, serif" 
+        font-style="italic" 
+        font-weight="600" 
+        font-size="60" 
+        fill="#234B58" 
+        letter-spacing="1">
+    Shakti
+  </text>
+
+  <!-- CENTRAL EMBLEM GROUP -->
+  <g transform="translate(0, -10)">
+    
+    <!-- UPPER LOTUS PETALS (Gold crown behind head) -->
+    <!-- Center Gold Petal -->
+    <path d="M 250 148 C 242 165, 243 185, 250 200 C 257 185, 258 165, 250 148 Z" 
+          fill="none" stroke="#DDA84D" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Left Gold Petal -->
+    <path d="M 245 160 C 230 170, 222 188, 230 208 C 238 195, 245 182, 248 168 Z" 
+          fill="none" stroke="#DDA84D" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Right Gold Petal -->
+    <path d="M 255 160 C 270 170, 278 188, 270 208 C 262 195, 255 182, 252 168 Z" 
+          fill="none" stroke="#DDA84D" stroke-width="2.5" stroke-linejoin="round" />
+
+    <!-- GREEN LEAF ACCENTS (Left & Right) -->
+    <!-- Left Leaves -->
+    <g transform="rotate(-15 195 240)">
+      <path d="M 195 235 C 180 228, 172 238, 175 248 C 185 248, 192 242, 195 235 Z" fill="#6EA637" />
+      <path d="M 188 248 C 176 248, 172 258, 180 264 C 188 262, 192 255, 188 248 Z" fill="#84BD47" />
+    </g>
+    <!-- Right Leaves -->
+    <g transform="rotate(15 305 240)">
+      <path d="M 305 235 C 320 228, 328 238, 325 248 C 315 248, 308 242, 305 235 Z" fill="#6EA637" />
+      <path d="M 312 248 C 324 248, 328 258, 320 264 C 312 262, 308 255, 312 248 Z" fill="#84BD47" />
+    </g>
+
+    <!-- SIDE LOTUS WINGS / PETALS (Teal & Cyan) -->
+    <!-- Left Outer Teal Petal -->
+    <path d="M 226 270 C 190 250, 165 260, 162 285 C 160 305, 185 320, 222 300 C 205 292, 185 285, 180 278 C 185 268, 205 264, 226 270 Z" 
+          fill="none" stroke="#2B7487" stroke-width="3" stroke-linejoin="round" />
+    <!-- Left Inner Accent Line -->
+    <path d="M 178 285 C 188 274, 208 272, 224 280 C 208 290, 192 292, 178 285 Z" 
+          fill="#5CB7C8" fill-opacity="0.35" stroke="#48A8BA" stroke-width="1.5" />
+
+    <!-- Right Outer Teal Petal -->
+    <path d="M 274 270 C 310 250, 335 260, 338 285 C 340 305, 315 320, 278 300 C 295 292, 315 285, 320 278 C 315 268, 295 264, 274 270 Z" 
+          fill="none" stroke="#2B7487" stroke-width="3" stroke-linejoin="round" />
+    <!-- Right Inner Accent Line -->
+    <path d="M 322 285 C 312 274, 292 272, 276 280 C 292 290, 308 292, 322 285 Z" 
+          fill="#5CB7C8" fill-opacity="0.35" stroke="#48A8BA" stroke-width="1.5" />
+
+    <!-- MEDITATING FIGURE SILHOUETTE (Shakti) -->
+    <!-- Hair Topknot Bun -->
+    <circle cx="250" cy="184" r="8.5" fill="#244E5C" />
+    
+    <!-- Head -->
+    <path d="M 250 193 C 243 193, 239 199, 239 207 C 239 217, 244 225, 250 225 C 256 225, 261 217, 261 207 C 261 199, 257 193, 250 193 Z" 
+          fill="none" stroke="#244E5C" stroke-width="2.5" />
+
+    <!-- Graceful Arms Raised Upwards in Celebration / Prana Receptivity -->
+    <!-- Left Arm -->
+    <path d="M 242 238 C 228 228, 210 210, 185 186 C 172 174, 163 162, 160 160 C 163 166, 172 178, 182 192 C 196 210, 212 232, 230 252" 
+          fill="none" stroke="#244E5C" stroke-width="2.8" stroke-linecap="round" />
+    <!-- Left Hand Open to Sky -->
+    <path d="M 160 160 C 163 154, 168 152, 172 156" fill="none" stroke="#244E5C" stroke-width="2" stroke-linecap="round" />
+    <path d="M 160 160 C 158 155, 155 158, 158 165" fill="none" stroke="#244E5C" stroke-width="1.8" stroke-linecap="round" />
+
+    <!-- Right Arm -->
+    <path d="M 258 238 C 272 228, 290 210, 315 186 C 328 174, 337 162, 340 160 C 337 166, 328 178, 318 192 C 304 210, 288 232, 270 252" 
+          fill="none" stroke="#244E5C" stroke-width="2.8" stroke-linecap="round" />
+    <!-- Right Hand Open to Sky -->
+    <path d="M 340 160 C 337 154, 332 152, 328 156" fill="none" stroke="#244E5C" stroke-width="2" stroke-linecap="round" />
+    <path d="M 340 160 C 342 155, 345 158, 342 165" fill="none" stroke="#244E5C" stroke-width="1.8" stroke-linecap="round" />
+
+    <!-- Torso: Elegant contoured waist & posture -->
+    <path d="M 235 250 C 240 262, 241 278, 236 295" fill="none" stroke="#244E5C" stroke-width="2.8" stroke-linecap="round" />
+    <path d="M 265 250 C 260 262, 259 278, 264 295" fill="none" stroke="#244E5C" stroke-width="2.8" stroke-linecap="round" />
+
+    <!-- Crossed Legs in Lotus Pose (Padmasana) -->
+    <path d="M 236 295 C 220 300, 182 308, 172 320 C 165 330, 178 338, 205 338 C 225 338, 240 332, 250 330 C 260 332, 275 338, 295 338 C 322 338, 335 330, 328 320 C 318 308, 280 300, 264 295" 
+          fill="none" stroke="#244E5C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 215 328 C 235 324, 265 324, 285 328" fill="none" stroke="#244E5C" stroke-width="2" stroke-linecap="round" />
+
+    <!-- WATER WAVES (Beneath Lotus Base) -->
+    <!-- Top Wave Line -->
+    <path d="M 165 350 C 190 344, 220 354, 250 348 C 280 342, 310 352, 335 348" 
+          fill="none" stroke="#4DB5BE" stroke-width="3" stroke-linecap="round" />
+    <!-- Bottom Wave Line -->
+    <path d="M 185 362 C 205 356, 230 364, 250 359 C 270 354, 295 362, 315 358" 
+          fill="none" stroke="#77C9D0" stroke-width="2.2" stroke-linecap="round" />
+
+    <!-- CELESTIAL ELEMENTS (Sun & Moon) -->
+    <!-- Left: Golden Sun -->
+    <g transform="translate(142, 245)">
+      <!-- Sun Core Circle -->
+      <circle cx="0" cy="0" r="14" fill="none" stroke="url(#sun-gold)" stroke-width="2.5" />
+      <!-- 8 Sun Rays -->
+      <path d="M 0 -22 L 0 -16" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M 0 16 L 0 22" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M -22 0 L -16 0" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M 16 0 L 22 0" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M -15 -15 L -11 -11" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M 11 11 L 15 15" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M 15 -15 L 11 -11" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M -11 11 L -15 15" stroke="url(#sun-gold)" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+
+    <!-- Right: Golden Crescent Moon -->
+    <g transform="translate(358, 245)">
+      <!-- Crescent facing inward -->
+      <path d="M 5 -18 C 16 -12, 18 12, 5 18 C 11 10, 11 -10, 5 -18 Z" 
+            fill="url(#sun-gold)" />
+    </g>
+  </g>
+
+  <!-- BOTTOM CURVED TEXT: PRANA SPA MASSAGE -->
+  <text fill="#204754" 
+        font-family="'Plus Jakarta Sans', 'Segoe UI', Montserrat, Arial, sans-serif" 
+        font-size="24.5" 
+        font-weight="700" 
+        letter-spacing="5.5">
+    <textPath href="#bottom-curve" startOffset="50%" text-anchor="middle">
+      PRANA SPA MASSAGE
+    </textPath>
+  </text>
+</svg>
