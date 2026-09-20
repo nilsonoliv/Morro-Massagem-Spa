@@ -42,6 +42,8 @@ export interface ServiceItem {
   category: 'relaxante' | 'terapeutica' | 'estetica' | 'especial';
   badge?: string;
   iconName: string;
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
 export interface BookingFormData {

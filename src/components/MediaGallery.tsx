@@ -38,6 +38,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
   const [newCategory, setNewCategory] = useState<MediaCategory>('beira_mar');
   const [newDescription, setNewDescription] = useState('');
   const [newLocation, setNewLocation] = useState('Segunda Praia, Morro de São Paulo');
+  const [compressionInfo, setCompressionInfo] = useState<{ origSize: string; webpSize: string; savings: string } | null>(null);
 
   const filteredMedia = mediaList.filter(item => {
     if (selectedFilter === 'all') return true;
@@ -48,13 +49,58 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const isVideo = file.type.startsWith('video/');
-      setNewType(isVideo ? 'video' : 'photo');
+    if (!file) return;
+
+    const isVideo = file.type.startsWith('video/');
+    setNewType(isVideo ? 'video' : 'photo');
+
+    if (isVideo) {
+      setCompressionInfo(null);
       const reader = new FileReader();
       reader.onload = () => {
         if (typeof reader.result === 'string') {
           setNewUrl(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // Compress to high-efficiency WebP format in-browser using HTML5 Canvas
+      const origSizeKB = Math.round(file.size / 1024);
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxDim = 1600;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(img, 0, 0, width, height);
+              const webpDataUrl = canvas.toDataURL('image/webp', 0.82);
+              setNewUrl(webpDataUrl);
+              const webpSizeKB = Math.round((webpDataUrl.length * 3) / 4 / 1024);
+              const percentSaved = Math.max(0, Math.round((1 - (webpSizeKB / origSizeKB)) * 100));
+              setCompressionInfo({
+                origSize: `${origSizeKB} KB`,
+                webpSize: `${webpSizeKB} KB`,
+                savings: `${percentSaved}%`
+              });
+            }
+          };
+          img.src = reader.result;
         }
       };
       reader.readAsDataURL(file);
@@ -80,6 +126,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
     setNewTitle('');
     setNewUrl('');
     setNewDescription('');
+    setCompressionInfo(null);
     setIsAddModalOpen(false);
   };
 
@@ -185,9 +232,9 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                   </div>
                 )}
 
-                {/* Top Badge: Type Indicator */}
-                <div className="absolute top-3 left-3">
-                  <span className="inline-flex items-center gap-1 bg-[#2C3639]/75 backdrop-blur-md text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full border border-white/10">
+                {/* Top Badge: Type Indicator & Real Photo Badge */}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap max-w-[85%]">
+                  <span className="inline-flex items-center gap-1 bg-[#2C3639]/80 backdrop-blur-md text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full border border-white/10 shadow-xs">
                     {item.type === 'video' ? (
                       <>
                         <VideoIcon className="w-3 h-3 text-[#78A1BB]" />
@@ -196,10 +243,16 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                     ) : (
                       <>
                         <ImageIcon className="w-3 h-3 text-emerald-300" />
-                        <span>Foto</span>
+                        <span>WebP</span>
                       </>
                     )}
                   </span>
+                  {(item.id.includes('real') || item.title.includes('Foto Real')) && (
+                    <span className="inline-flex items-center gap-1 bg-emerald-800/85 backdrop-blur-md text-white text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full border border-emerald-400/30 shadow-xs">
+                      <Sparkles className="w-2.5 h-2.5 text-emerald-200" />
+                      <span>Foto Real</span>
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -385,6 +438,36 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                       className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white text-xs"
                     />
                   </div>
+
+                  {/* WebP Compression Status Banner */}
+                  {compressionInfo && (
+                    <div className="bg-emerald-50 border border-emerald-200/80 rounded-xl p-3 text-xs text-emerald-900 flex items-center justify-between shadow-2xs animate-in fade-in">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <div>
+                          <p className="font-semibold text-emerald-950">Otimizado para WebP ({compressionInfo.savings} mais leve)</p>
+                          <p className="text-[11px] text-emerald-700">Formato leve de alta qualidade para carregamento instantâneo.</p>
+                        </div>
+                      </div>
+                      <span className="font-mono text-[11px] font-bold bg-emerald-100/90 text-emerald-800 px-2 py-1 rounded-md shrink-0">
+                        {compressionInfo.origSize} → {compressionInfo.webpSize}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Immediate Thumbnail Preview */}
+                  {newUrl && (
+                    <div className="relative w-full h-28 rounded-xl overflow-hidden bg-stone-100 border border-black/10 flex items-center justify-center">
+                      {newType === 'video' ? (
+                        <video src={newUrl} className="w-full h-full object-cover" muted />
+                      ) : (
+                        <img src={newUrl} alt="Prévia" className="w-full h-full object-cover" />
+                      )}
+                      <span className="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full backdrop-blur-xs">
+                        Prévia carregada
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 

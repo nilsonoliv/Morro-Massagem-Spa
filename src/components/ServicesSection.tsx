@@ -100,10 +100,35 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, onSe
           {filteredServices.map(service => (
             <div
               key={service.id}
-              className="bg-white/80 backdrop-blur-xs rounded-2xl p-6 sm:p-7 border border-black/5 shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-0.5 relative text-left"
+              className="bg-white/80 backdrop-blur-xs rounded-2xl p-5 sm:p-6 border border-black/5 shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-0.5 relative text-left"
             >
-              {/* Badge if available */}
-              {service.badge && (
+              {/* Service WebP Image Banner */}
+              {service.imageUrl && (
+                <div className="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 bg-[#EBE7DF] border border-black/5">
+                  <img
+                    src={service.imageUrl}
+                    alt={service.imageAlt || service.name}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+                  
+                  {service.badge && (
+                    <span className="absolute top-3 right-3 bg-[#2C3639]/90 text-white backdrop-blur-xs text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full shadow-xs">
+                      {service.badge}
+                    </span>
+                  )}
+
+                  <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white/95 text-[11px] font-medium drop-shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse"></span>
+                    <span>Morro de São Paulo</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Badge if available and NO image */}
+              {service.badge && !service.imageUrl && (
                 <span className="absolute top-4 right-4 bg-[#4A5D4E]/10 text-[#4A5D4E] border border-[#4A5D4E]/20 text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full">
                   {service.badge}
                 </span>

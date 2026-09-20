@@ -15,11 +15,18 @@ import { MediaItem, Review, ServiceItem } from './types';
 export default function App() {
   const [services] = useState<ServiceItem[]>(INITIAL_SERVICES);
   
-  // Media state with localStorage persistence
+  // Media state with localStorage persistence and automatic sync of new WebP media
   const [mediaList, setMediaList] = useState<MediaItem[]>(() => {
     try {
-      const saved = localStorage.getItem('massoterapia_media');
+      const saved = localStorage.getItem('massoterapia_media_v2');
       if (saved) return JSON.parse(saved);
+      const oldSaved = localStorage.getItem('massoterapia_media');
+      if (oldSaved) {
+        const parsed = JSON.parse(oldSaved);
+        const existingIds = new Set(parsed.map((item: MediaItem) => item.id));
+        const missingInitial = INITIAL_MEDIA.filter(item => !existingIds.has(item.id));
+        return [...missingInitial, ...parsed];
+      }
     } catch {
       // ignore
     }
@@ -44,7 +51,7 @@ export default function App() {
   // Save media on changes
   useEffect(() => {
     try {
-      localStorage.setItem('massoterapia_media', JSON.stringify(mediaList));
+      localStorage.setItem('massoterapia_media_v2', JSON.stringify(mediaList));
     } catch {
       // ignore
     }

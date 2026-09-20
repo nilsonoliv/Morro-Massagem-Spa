@@ -12,6 +12,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'terapeutica',
     badge: 'Milenar & Revigorante',
     iconName: 'Activity',
+    imageUrl: '/images/massagem-praia-atendimento.webp',
+    imageAlt: 'Thai Yoga e descompressão corporal na praia de Morro de São Paulo'
   },
   {
     id: 'massagem-orgastica',
@@ -24,6 +26,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'especial',
     badge: 'Experiência Shakti',
     iconName: 'Sparkles',
+    imageUrl: '/images/massagem-gazebo-mar.webp',
+    imageAlt: 'Sessão Shakti Prana sensorial em gazebo exclusivo com vista para o mar'
   },
   {
     id: 'spa-pos-passeios',
@@ -36,6 +40,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'relaxante',
     badge: 'Pós-Passeio',
     iconName: 'Footprints',
+    imageUrl: '/images/massagem-pos-passeio-praia.webp',
+    imageAlt: 'Recuperação muscular pós-passeios na praia em Morro de São Paulo'
   },
   {
     id: 'relaxante-tropical',
@@ -48,6 +54,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'relaxante',
     badge: 'Mais Pedida',
     iconName: 'Sparkles',
+    imageUrl: '/images/massagem-gazebo-mar.webp',
+    imageAlt: 'Massagem relaxante com óleos vegetais e brisa do mar'
   },
   {
     id: 'terapeutica-dores',
@@ -60,6 +68,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'terapeutica',
     badge: 'Especialidade',
     iconName: 'Activity',
+    imageUrl: '/images/massagem-liberacao-cervical.webp',
+    imageAlt: 'Liberação profunda de contraturas e tensões cervicais e lombares'
   },
   {
     id: 'drenagem-linfatica',
@@ -71,6 +81,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     recommendedFor: 'Inchaço nas pernas pós-viagem, celulite e retenção hídrica.',
     category: 'estetica',
     iconName: 'Droplets',
+    imageUrl: '/images/massagem-drenagem.webp',
+    imageAlt: 'Drenagem linfática corporal desintoxicante'
   },
   {
     id: 'reflexologia-podal',
@@ -83,6 +95,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'relaxante',
     badge: 'Imperdível na Ilha',
     iconName: 'Footprints',
+    imageUrl: '/images/massagem-reflexologia.webp',
+    imageAlt: 'Reflexologia podal com hidratação e óleos essenciais'
   },
   {
     id: 'ventosaterapia-integrativa',
@@ -94,6 +108,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     recommendedFor: 'Atletas, praticantes de surf/futevôlei e dores persistentes.',
     category: 'terapeutica',
     iconName: 'Zap',
+    imageUrl: '/images/massagem-ventosa.webp',
+    imageAlt: 'Ventosaterapia integrativa para alívio muscular'
   },
   {
     id: 'casal-ou-pousada',
@@ -106,16 +122,66 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     category: 'especial',
     badge: 'Experiência VIP',
     iconName: 'HeartHandshake',
+    imageUrl: '/images/massagem-gazebo-mar.webp',
+    imageAlt: 'Atendimento VIP na pousada, varanda ou gazebo privativo'
   }
 ];
 
 export const INITIAL_MEDIA: MediaItem[] = [
   {
+    id: 'media-real-praia',
+    title: 'Foto Real: Atendimento Beira-Mar na Segunda Praia',
+    type: 'photo',
+    url: '/images/massagem-praia-atendimento.webp',
+    thumbnailUrl: '/images/massagem-praia-atendimento.webp',
+    category: 'beira_mar',
+    description: 'Foto real de atendimento em Morro de São Paulo. Massagem terapêutica nas espreguiçadeiras com brisa suave e som das ondas da Segunda Praia.',
+    location: 'Segunda Praia, Morro de São Paulo',
+    isFeatured: true,
+    dateAdded: '2025-03-07'
+  },
+  {
+    id: 'media-real-gazebo',
+    title: 'Foto Real: Massagem Relaxante no Gazebo com Vista Mar',
+    type: 'photo',
+    url: '/images/massagem-gazebo-mar.webp',
+    thumbnailUrl: '/images/massagem-gazebo-mar.webp',
+    category: 'ambiente',
+    description: 'Sessão exclusiva em deck de madeira com vista panorâmica para o mar cristalino de Morro de SP. Aromaterapia, óleos naturais de coco e ambiente paradisíaco.',
+    location: 'Mirante & Gazebo Beira-Mar',
+    isFeatured: true,
+    dateAdded: '2025-03-07'
+  },
+  {
+    id: 'media-real-cervical',
+    title: 'Foto Real: Liberação Cervical e Trapézio na Areia',
+    type: 'photo',
+    url: '/images/massagem-liberacao-cervical.webp',
+    thumbnailUrl: '/images/massagem-liberacao-cervical.webp',
+    category: 'terapeutica',
+    description: 'Foto real de descompressão pontual de nós de tensão na cervical, nuca e escápulas, trazendo alívio imediato aos turistas da ilha.',
+    location: 'Segunda Praia, Morro de São Paulo',
+    isFeatured: true,
+    dateAdded: '2025-03-07'
+  },
+  {
+    id: 'media-real-pospasseio',
+    title: 'Foto Real: Spa Pós-Passeios & Recuperação Muscular',
+    type: 'photo',
+    url: '/images/massagem-pos-passeio-praia.webp',
+    thumbnailUrl: '/images/massagem-pos-passeio-praia.webp',
+    category: 'relaxante',
+    description: 'Foto real de sessão relaxante pós-passeio de lancha e caminhadas na ilha. Conforto na espreguiçadeira com hidratação e óleos naturais.',
+    location: 'Segunda Praia, Morro de SP',
+    isFeatured: true,
+    dateAdded: '2025-03-07'
+  },
+  {
     id: 'media-1',
-    title: 'Massagem Terapêutica à Beira-Mar',
+    title: 'Vídeo: Descompressão Muscular na Brisa Tropical',
     type: 'video',
     url: 'https://assets.mixkit.co/videos/preview/mixkit-woman-receiving-a-back-massage-at-a-spa-41484-large.mp4',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+    thumbnailUrl: '/images/massagem-praia-atendimento.webp',
     videoDuration: '0:38',
     category: 'beira_mar',
     description: 'Sessão revigorante com técnicas de descompressão muscular, sentindo a brisa tropical e ouvindo o quebrar das ondas.',
@@ -124,47 +190,25 @@ export const INITIAL_MEDIA: MediaItem[] = [
     dateAdded: '2025-03-01'
   },
   {
-    id: 'media-2',
-    title: 'Maca Preparada no Quiosque Beira-Mar',
-    type: 'photo',
-    url: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1200&q=80',
-    category: 'ambiente',
-    description: 'Espaço higienizado, lençóis brancos descartáveis, óleos naturais e vista panorâmica para o mar cristalino.',
-    location: 'Praia de Morro de São Paulo',
-    isFeatured: true,
-    dateAdded: '2025-02-28'
-  },
-  {
     id: 'media-3',
-    title: 'Liberação Cervical e Trapézio na Areia',
+    title: 'Vídeo: Manobras de Soltura Cervical',
     type: 'video',
     url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-massaging-a-persons-shoulders-41483-large.mp4',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80',
+    thumbnailUrl: '/images/massagem-liberacao-cervical.webp',
     videoDuration: '0:42',
     category: 'terapeutica',
     description: 'Manobras para soltar toda a musculatura do pescoço, nuca e escápula, aliviando o cansaço do dia a dia.',
     location: 'Morro de São Paulo - Bahia',
-    isFeatured: true,
-    dateAdded: '2025-02-20'
-  },
-  {
-    id: 'media-4',
-    title: 'Atendimento Personalizado nas Espreguiçadeiras',
-    type: 'photo',
-    url: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80',
-    category: 'beira_mar',
-    description: 'Atendimento exclusivo na orla, aliando massagem terapêutica com a vibração relaxante da natureza local.',
-    location: 'Segunda Praia, Morro de SP',
     isFeatured: false,
-    dateAdded: '2025-02-15'
+    dateAdded: '2025-02-20'
   },
   {
     id: 'media-5',
     title: 'Aromaterapia com Óleos Essenciais e Coco da Bahia',
     type: 'photo',
-    url: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80',
+    url: '/images/massagem-drenagem.webp',
     category: 'relaxante',
-    description: 'Produtos de alta qualidade, óleo de coco puro prensado a frio e toalhas aquecidas para uma experiência sensorial completa.',
+    description: 'Produtos de alta qualidade, óleo de coco puro prensado a frio e toalhas higienizadas para uma experiência sensorial completa.',
     location: 'Espaço Shakti Prana Massage',
     isFeatured: false,
     dateAdded: '2025-02-10'
@@ -173,7 +217,7 @@ export const INITIAL_MEDIA: MediaItem[] = [
     id: 'media-6',
     title: 'Reflexologia Podal e Drenagem',
     type: 'photo',
-    url: 'https://images.unsplash.com/photo-1512290900672-1f02e6b09be8?auto=format&fit=crop&w=1200&q=80',
+    url: '/images/massagem-reflexologia.webp',
     category: 'drenagem',
     description: 'Cuidado especial com pés e pernas para você continuar aproveitando as belezas da ilha sem dores ou cansaço.',
     location: 'Morro de São Paulo',
