@@ -28,11 +28,11 @@ export const ShaktiLogo: React.FC<ShaktiLogoProps> = ({
         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#D9A84E]/25 via-[#4CB8C4]/20 to-transparent blur-md -z-10 scale-125" />
       )}
 
-      {/* High-definition scalable vector logo */}
+      {/* High-definition scalable vector logo formatted as a round profile picture */}
       <img
         src="/logo.svg"
         alt="Shakti Prana Spa Massage - Morro de São Paulo"
-        className={`${sizeClasses[size]} object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.06)] shrink-0 transition-transform duration-300 hover:scale-105`}
+        className={`${sizeClasses[size]} rounded-full aspect-square object-cover border-2 border-[#4A5D4E]/25 bg-white p-0.5 shadow-xs ring-1 ring-black/5 shrink-0 transition-transform duration-300 hover:scale-105`}
         referrerPolicy="no-referrer"
       />
 

@@ -3,132 +3,31 @@ import {
   Play, 
   Image as ImageIcon, 
   Video as VideoIcon, 
-  PlusCircle, 
   X, 
   MapPin, 
-  Calendar, 
   Maximize2, 
   Sparkles, 
-  Upload, 
-  Eye, 
   Filter
 } from 'lucide-react';
-import { MediaCategory, MediaItem, MediaType } from '../types';
+import { MediaCategory, MediaItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 interface MediaGalleryProps {
   mediaList: MediaItem[];
-  onAddMedia: (newMedia: Omit<MediaItem, 'id' | 'dateAdded'>) => void;
 }
 
 export const MediaGallery: React.FC<MediaGalleryProps> = ({ 
-  mediaList, 
-  onAddMedia
+  mediaList 
 }) => {
-  const { t, language } = useLanguage();
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'video' | 'photo' | MediaCategory>('all');
+  const { t } = useLanguage();
+  const [selectedFilter, setSelectedFilter] = useState<'all' | MediaCategory>('all');
   const [activeMedia, setActiveMedia] = useState<MediaItem | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  // Form states for adding new media
-  const [newTitle, setNewTitle] = useState('');
-  const [newType, setNewType] = useState<MediaType>('photo');
-  const [newUrl, setNewUrl] = useState('');
-  const [newCategory, setNewCategory] = useState<MediaCategory>('beira_mar');
-  const [newDescription, setNewDescription] = useState('');
-  const [newLocation, setNewLocation] = useState('Segunda Praia, Morro de São Paulo');
-  const [compressionInfo, setCompressionInfo] = useState<{ origSize: string; webpSize: string; savings: string } | null>(null);
 
   const filteredMedia = mediaList.filter(item => {
     if (selectedFilter === 'all') return true;
-    if (selectedFilter === 'video') return item.type === 'video';
-    if (selectedFilter === 'photo') return item.type === 'photo';
     return item.category === selectedFilter;
   });
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const isVideo = file.type.startsWith('video/');
-    setNewType(isVideo ? 'video' : 'photo');
-
-    if (isVideo) {
-      setCompressionInfo(null);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          setNewUrl(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    } else {
-      // Compress to high-efficiency WebP format in-browser using HTML5 Canvas
-      const origSizeKB = Math.round(file.size / 1024);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const maxDim = 1600;
-            let width = img.width;
-            let height = img.height;
-            if (width > maxDim || height > maxDim) {
-              if (width > height) {
-                height = Math.round((height * maxDim) / width);
-                width = maxDim;
-              } else {
-                width = Math.round((width * maxDim) / height);
-                height = maxDim;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-              ctx.drawImage(img, 0, 0, width, height);
-              const webpDataUrl = canvas.toDataURL('image/webp', 0.82);
-              setNewUrl(webpDataUrl);
-              const webpSizeKB = Math.round((webpDataUrl.length * 3) / 4 / 1024);
-              const percentSaved = Math.max(0, Math.round((1 - (webpSizeKB / origSizeKB)) * 100));
-              setCompressionInfo({
-                origSize: `${origSizeKB} KB`,
-                webpSize: `${webpSizeKB} KB`,
-                savings: `${percentSaved}%`
-              });
-            }
-          };
-          img.src = reader.result;
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAddSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTitle.trim() || !newUrl.trim()) return;
-
-    onAddMedia({
-      title: newTitle.trim(),
-      type: newType,
-      url: newUrl.trim(),
-      category: newCategory,
-      description: newDescription.trim() || 'Atendimento de massoterapia em Morro de São Paulo.',
-      location: newLocation.trim() || 'Morro de São Paulo - BA',
-      isFeatured: true,
-      videoDuration: newType === 'video' ? '0:30' : undefined,
-    });
-
-    // Reset & close
-    setNewTitle('');
-    setNewUrl('');
-    setNewDescription('');
-    setCompressionInfo(null);
-    setIsAddModalOpen(false);
-  };
 
   return (
     <section id="galeria" className="py-16 sm:py-24 bg-[#FAF8F5] border-y border-black/5">
@@ -148,27 +47,17 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
               {t.gallery.subtitle}
             </p>
           </div>
-
-          {/* Add Media Action Button */}
-          <button
-            id="btn-open-add-media"
-            onClick={() => setIsAddModalOpen(true)}
-            className="inline-flex items-center gap-2 bg-[#4A5D4E] hover:bg-[#2C3639] text-white px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-wider shadow-xs transition-colors self-start md:self-auto"
-          >
-            <PlusCircle className="w-4 h-4 text-[#F5F2ED]" />
-            <span>{t.gallery.btnAddMedia}</span>
-          </button>
         </div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-2 overflow-x-auto">
           {[
             { key: 'all', label: t.gallery.filterAll, icon: Filter },
-            { key: 'video', label: t.gallery.watchVideo, icon: VideoIcon },
-            { key: 'photo', label: t.gallery.viewPhoto, icon: ImageIcon },
             { key: 'beira_mar', label: t.gallery.filterBeiraMar, icon: Sparkles },
             { key: 'terapeutica', label: t.gallery.filterTherapeutic, icon: Sparkles },
+            { key: 'relaxante', label: t.gallery.filterRelax || 'Relaxante', icon: Sparkles },
             { key: 'ambiente', label: t.gallery.filterAmbiance, icon: Sparkles },
+            { key: 'drenagem', label: t.gallery.filterDrainage || 'Drenagem', icon: Sparkles },
           ].map(tab => {
             const Icon = tab.icon;
             return (
@@ -201,7 +90,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                 {item.type === 'video' ? (
                   <div className="relative w-full h-full">
                     <img
-                      src={item.thumbnailUrl || 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80'}
+                      src={item.thumbnailUrl || '/images/massagem-praia-atendimento.webp'}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 opacity-90"
                     />
@@ -232,7 +121,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                   </div>
                 )}
 
-                {/* Top Badge: Type Indicator & Real Photo Badge */}
+                {/* Top Badge: Type Indicator */}
                 <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap max-w-[85%]">
                   <span className="inline-flex items-center gap-1 bg-[#2C3639]/80 backdrop-blur-md text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full border border-white/10 shadow-xs">
                     {item.type === 'video' ? (
@@ -243,11 +132,11 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                     ) : (
                       <>
                         <ImageIcon className="w-3 h-3 text-emerald-300" />
-                        <span>WebP</span>
+                        <span>Foto</span>
                       </>
                     )}
                   </span>
-                  {(item.id.includes('real') || item.title.includes('Foto Real')) && (
+                  {(item.id.includes('real') || item.title.includes('Foto Real') || item.id.includes('foto-real')) && (
                     <span className="inline-flex items-center gap-1 bg-emerald-800/85 backdrop-blur-md text-white text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full border border-emerald-400/30 shadow-xs">
                       <Sparkles className="w-2.5 h-2.5 text-emerald-200" />
                       <span>Foto Real</span>
@@ -278,7 +167,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
       </div>
 
-      {/* Lightbox / Video Player Modal */}
+      {/* Lightbox / Media Viewer Modal */}
       {activeMedia && (
         <div 
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
@@ -343,191 +232,6 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                 </a>
               </div>
             </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* Add Media Modal Form */}
-      {isAddModalOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6"
-          onClick={() => setIsAddModalOpen(false)}
-        >
-          <div 
-            className="relative max-w-lg w-full bg-[#F5F2ED] rounded-2xl p-6 sm:p-8 shadow-2xl border border-black/10 text-left animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-4 border-b border-black/10">
-              <div className="flex items-center gap-2">
-                <PlusCircle className="w-5 h-5 text-[#4A5D4E]" />
-                <h3 className="font-serif font-normal text-xl text-[#2C3639]">{t.gallery.modalAddTitle}</h3>
-              </div>
-              <button 
-                onClick={() => setIsAddModalOpen(false)}
-                className="text-stone-400 hover:text-stone-700"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleAddSubmit} className="space-y-4 pt-4 text-xs sm:text-sm">
-              {/* Type toggle */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1.5">{t.gallery.formType}</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setNewType('photo')}
-                    className={`py-2 rounded-xl font-semibold flex items-center justify-center gap-2 border transition-all ${
-                      newType === 'photo'
-                        ? 'bg-[#2C3639] text-[#F5F2ED] border-[#2C3639]'
-                        : 'bg-white text-stone-700 border-black/10'
-                    }`}
-                  >
-                    <ImageIcon className="w-4 h-4" /> {t.gallery.viewPhoto}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setNewType('video')}
-                    className={`py-2 rounded-xl font-semibold flex items-center justify-center gap-2 border transition-all ${
-                      newType === 'video'
-                        ? 'bg-[#2C3639] text-[#F5F2ED] border-[#2C3639]'
-                        : 'bg-white text-stone-700 border-black/10'
-                    }`}
-                  >
-                    <VideoIcon className="w-4 h-4" /> {t.gallery.watchVideo}
-                  </button>
-                </div>
-              </div>
-
-              {/* Title */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formTitle} *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Ex: Massagem na Segunda Praia..."
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
-                />
-              </div>
-
-              {/* File upload or URL */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formUrl} *</label>
-                <div className="space-y-2">
-                  <label className="flex flex-col items-center justify-center border-2 border-dashed border-stone-300 hover:border-[#4A5D4E] rounded-xl p-4 cursor-pointer bg-white transition-colors">
-                    <Upload className="w-6 h-6 text-stone-400 mb-1" />
-                    <span className="text-xs text-stone-600 font-medium">{t.gallery.formUrl} (Upload)</span>
-                    <input
-                      type="file"
-                      accept="image/*,video/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
-
-                  <div className="relative">
-                    <input
-                      type="url"
-                      placeholder="https://..."
-                      value={newUrl}
-                      onChange={(e) => setNewUrl(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white text-xs"
-                    />
-                  </div>
-
-                  {/* WebP Compression Status Banner */}
-                  {compressionInfo && (
-                    <div className="bg-emerald-50 border border-emerald-200/80 rounded-xl p-3 text-xs text-emerald-900 flex items-center justify-between shadow-2xs animate-in fade-in">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <div>
-                          <p className="font-semibold text-emerald-950">Otimizado para WebP ({compressionInfo.savings} mais leve)</p>
-                          <p className="text-[11px] text-emerald-700">Formato leve de alta qualidade para carregamento instantâneo.</p>
-                        </div>
-                      </div>
-                      <span className="font-mono text-[11px] font-bold bg-emerald-100/90 text-emerald-800 px-2 py-1 rounded-md shrink-0">
-                        {compressionInfo.origSize} → {compressionInfo.webpSize}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Immediate Thumbnail Preview */}
-                  {newUrl && (
-                    <div className="relative w-full h-28 rounded-xl overflow-hidden bg-stone-100 border border-black/10 flex items-center justify-center">
-                      {newType === 'video' ? (
-                        <video src={newUrl} className="w-full h-full object-cover" muted />
-                      ) : (
-                        <img src={newUrl} alt="Prévia" className="w-full h-full object-cover" />
-                      )}
-                      <span className="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full backdrop-blur-xs">
-                        Prévia carregada
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Category */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formCategory}</label>
-                <select
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value as MediaCategory)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
-                >
-                  <option value="beira_mar">{t.gallery.filterBeiraMar}</option>
-                  <option value="terapeutica">{t.gallery.filterTherapeutic}</option>
-                  <option value="relaxante">{t.gallery.filterRelax}</option>
-                  <option value="ambiente">{t.gallery.filterAmbiance}</option>
-                  <option value="drenagem">{t.gallery.filterDrainage}</option>
-                </select>
-              </div>
-
-              {/* Location in Morro */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formLocation}</label>
-                <input
-                  type="text"
-                  value={newLocation}
-                  onChange={(e) => setNewLocation(e.target.value)}
-                  placeholder="Ex: Segunda Praia, Morro de São Paulo"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block font-semibold text-stone-700 mb-1">{t.gallery.formDesc}</label>
-                <textarea
-                  rows={2}
-                  placeholder="..."
-                  value={newDescription}
-                  onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#4A5D4E] bg-white"
-                />
-              </div>
-
-              <div className="pt-3 border-t border-black/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2.5 rounded-full text-stone-600 hover:bg-stone-200 text-xs font-semibold"
-                >
-                  {t.gallery.btnCancel}
-                </button>
-                <button
-                  type="submit"
-                  disabled={!newTitle || !newUrl}
-                  className="bg-[#4A5D4E] hover:bg-[#2C3639] disabled:opacity-50 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-xs transition-colors"
-                >
-                  {t.gallery.btnSave}
-                </button>
-              </div>
-            </form>
 
           </div>
         </div>

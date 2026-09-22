@@ -77,8 +77,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               </button>
             </div>
 
-            {/* Clean Feature Mini-Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-black/5">
+            {/* Clean Feature Mini-Grid (oculto no mobile para deixar o layout enxuto) */}
+            <div className="hidden sm:grid sm:grid-cols-3 gap-3 pt-3 border-t border-black/5">
               <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-white/60 border border-black/5">
                 <Waves className="w-4 h-4 text-[#4A5D4E] shrink-0" />
                 <div className="text-left">
