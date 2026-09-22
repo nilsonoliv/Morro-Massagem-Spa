@@ -3,7 +3,7 @@ import { MediaItem, Review, ServiceItem } from '../types';
 export const INITIAL_SERVICES: ServiceItem[] = [
   {
     id: 'thai-massagem',
-    name: 'Thai Yoga Massagem',
+    name: 'Thai Yoga Massage',
     tagline: 'Alongamentos terapêuticos e liberação das linhas energéticas Sen',
     description: 'Técnica milenar tailandesa combinando ioga assistida, acupressão rítmica e descompressão profunda das articulações e músculos. Realizada com roupas confortáveis ou toalhas, revigora a circulação, devolve a flexibilidade e restaura a vitalidade física e mental em Morro de São Paulo.',
     durationMin: '60-120',
