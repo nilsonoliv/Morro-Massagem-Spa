@@ -15,24 +15,7 @@ import { MediaItem, Review, ServiceItem } from './types';
 
 export default function App() {
   const [services] = useState<ServiceItem[]>(INITIAL_SERVICES);
-  
-  // Media state with localStorage persistence and automatic sync of new WebP media
-  const [mediaList, setMediaList] = useState<MediaItem[]>(() => {
-    try {
-      const saved = localStorage.getItem('massoterapia_media_v2');
-      if (saved) return JSON.parse(saved);
-      const oldSaved = localStorage.getItem('massoterapia_media');
-      if (oldSaved) {
-        const parsed = JSON.parse(oldSaved);
-        const existingIds = new Set(parsed.map((item: MediaItem) => item.id));
-        const missingInitial = INITIAL_MEDIA.filter(item => !existingIds.has(item.id));
-        return [...missingInitial, ...parsed];
-      }
-    } catch {
-      // ignore
-    }
-    return INITIAL_MEDIA;
-  });
+  const mediaList = INITIAL_MEDIA;
 
   // Reviews state with localStorage persistence
   const [reviews, setReviews] = useState<Review[]>(() => {
@@ -49,14 +32,15 @@ export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedServiceForBooking, setSelectedServiceForBooking] = useState<ServiceItem | null>(null);
 
-  // Save media on changes
+  // Clean up legacy media storage keys so the app uses static local assets directly
   useEffect(() => {
     try {
-      localStorage.setItem('massoterapia_media_v2', JSON.stringify(mediaList));
+      localStorage.removeItem('massoterapia_media');
+      localStorage.removeItem('massoterapia_media_v2');
     } catch {
       // ignore
     }
-  }, [mediaList]);
+  }, []);
 
   // Save reviews on changes
   useEffect(() => {
@@ -66,15 +50,6 @@ export default function App() {
       // ignore
     }
   }, [reviews]);
-
-  const handleAddMedia = (newMediaData: Omit<MediaItem, 'id' | 'dateAdded'>) => {
-    const newItem: MediaItem = {
-      ...newMediaData,
-      id: `media-${Date.now()}`,
-      dateAdded: new Date().toISOString().split('T')[0],
-    };
-    setMediaList(prev => [newItem, ...prev]);
-  };
 
   const handleAddReview = (newReviewData: Omit<Review, 'id' | 'date' | 'helpfulCount'>) => {
     const newRev: Review = {
@@ -118,10 +93,9 @@ export default function App() {
           onSelectService={handleSelectService} 
         />
 
-        {/* Media Gallery (Photos & Videos) */}
+        {/* Media Gallery (Photos) */}
         <MediaGallery 
           mediaList={mediaList} 
-          onAddMedia={handleAddMedia}
         />
 
         {/* Testimonials & Reviews */}
